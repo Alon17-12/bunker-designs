@@ -689,6 +689,135 @@ input, textarea { font-family: inherit; }
   opacity: 0.6;
 }
 
+/* === PACKAGE STATUS PILL === */
+.package-status {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* === UPSELL CARDS === */
+.upsell-card {
+  background: linear-gradient(135deg, rgba(211, 32, 32, 0.08), rgba(211, 32, 32, 0.02));
+  border: 1px dashed rgba(211, 32, 32, 0.3);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.upsell-card::before {
+  content: '✨';
+  position: absolute;
+  top: -8px;
+  left: 14px;
+  font-size: 18px;
+  background: var(--black-soft);
+  padding: 0 6px;
+}
+.upsell-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--red-light);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+}
+.upsell-desc {
+  font-size: 12px;
+  color: var(--gray-200);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.upsell-desc strong { color: var(--white); }
+.upsell-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.upsell-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.upsell-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: var(--white);
+  font-size: 16px;
+  letter-spacing: -0.5px;
+}
+.upsell-price-currency { font-size: 11px; color: var(--gray-400); font-weight: 700; }
+.upsell-price-unit { font-size: 11px; color: var(--gray-400); font-weight: 500; }
+.upsell-btn {
+  background: var(--red);
+  border: none;
+  color: var(--white);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.upsell-btn:hover {
+  background: var(--red-dark);
+  transform: translateY(-1px);
+}
+
+/* Quantity stepper for additional Reels */
+.upsell-stepper {
+  display: flex;
+  align-items: center;
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.stepper-btn {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.stepper-btn:hover { background: var(--black-light); }
+.stepper-val {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  min-width: 24px;
+  text-align: center;
+  color: var(--white);
+}
+.upsell-total {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.upsell-total small { color: var(--gray-400); font-weight: 500; }
+
 /* === KEYBOARD HELP MODAL === */
 .modal-backdrop {
   position: fixed;
@@ -893,10 +1022,10 @@ input, textarea { font-family: inherit; }
       </div>
     </div>
 
-    <!-- General Feedback -->
+    <!-- Recommendation/Testimonial -->
     <div class="general-notes">
-      <div class="notes-label">💛 נשמח לשמוע פידבק — איך לחזק את הפרק?</div>
-      <textarea class="notes-input" placeholder="ספר לנו בכמה משפטים — מה היה מעולה? מה היית משנה? איך הקהל שלך יחווה את הפרק?">הפתיח קצת ארוך, אפשר לחתוך משנייה 0:15 ועד 0:38. את הקטע על מימון - בעצם הכי מעניין בכל הפרק, אולי שווה לחזק אותו בכותרת.</textarea>
+      <div class="notes-label">🌟 איך הייתה החוויה איתנו בבונקר? נשמח להמלצה</div>
+      <textarea class="notes-input" placeholder="מה אהבת? למה תמליץ לפודקאסטר חבר לבחור בבונקר? המילים שלך עוזרות לנו ולקהילה.">חוויה מעולה. הצוות מקצועי, הקשבה אמיתית למה שאני רוצה לעשות עם הפרק, וגמישות בעריכה. ממליץ בחום לכל מי שרוצה להתחיל פודקאסט ולא להתעסק עם הצד הטכני.</textarea>
     </div>
 
     <!-- Submit Bar -->
@@ -908,11 +1037,11 @@ input, textarea { font-family: inherit; }
         </div>
         <div class="summary-stat">
           <strong>3</strong>
-          <span>הערות ממוקדות</span>
+          <span>תיקונים</span>
         </div>
         <div class="summary-stat">
-          <strong>1</strong>
-          <span>הערה כללית</span>
+          <strong>⭐</strong>
+          <span>המלצה</span>
         </div>
       </div>
       <button class="btn-submit">
@@ -925,11 +1054,49 @@ input, textarea { font-family: inherit; }
   <!-- SIDEBAR -->
   <aside class="sidebar">
 
-    <!-- REELS SECTION -->
+    <!-- CORRECTIONS SECTION (now first) -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-section-title">✏️ תיקונים על הפרק המלא</div>
+        <span class="sidebar-section-count has-items">3</span>
+      </div>
+      <div class="comments-list">
+        <div class="comment-item">
+          <div class="comment-time">⏱ 0:12:34</div>
+          <div class="comment-text">הקטע הזה ארוך מדי, אולי לקצר ב-30 שניות.</div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-time">⏱ 0:28:15</div>
+          <div class="comment-text">תוריד את ההפרעה ברקע (נדמה לי שזה מקרר).</div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-time">⏱ 0:48:20</div>
+          <div class="comment-text">מעולה! זה הקטע שצריך להיות הפתיח של הפרק 💯</div>
+        </div>
+      </div>
+
+      <!-- UPSELL: Subtitles for full episode -->
+      <div class="upsell-card">
+        <div class="upsell-title">שדרוג לפרק המלא</div>
+        <div class="upsell-desc">
+          <strong>כתוביות בעברית</strong> — מסונכרנות, ניתנות להורדה כ-SRT, מוכנות לרשתות.
+        </div>
+        <div class="upsell-row">
+          <div class="upsell-price-wrap">
+            <span class="upsell-price">180</span>
+            <span class="upsell-price-currency">₪</span>
+            <span class="upsell-price-unit">· חד פעמי</span>
+          </div>
+          <button class="upsell-btn">הוסף לחבילה ←</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REELS SECTION (now second) -->
     <div class="sidebar-section">
       <div class="sidebar-section-header">
         <div class="sidebar-section-title">🎬 Reels שסומנו</div>
-        <span class="sidebar-section-count has-items">5</span>
+        <span class="package-status">5/5 כלולים ✓</span>
       </div>
       <div class="reels-list">
         <div class="reel-item">
@@ -992,26 +1159,24 @@ input, textarea { font-family: inherit; }
           <span>הוסף ריל מהזמן הנוכחי</span>
         </button>
       </div>
-    </div>
 
-    <!-- COMMENTS SECTION -->
-    <div class="sidebar-section">
-      <div class="sidebar-section-header">
-        <div class="sidebar-section-title">✏️ תיקונים על הפרק המלא</div>
-        <span class="sidebar-section-count has-items">3</span>
-      </div>
-      <div class="comments-list">
-        <div class="comment-item">
-          <div class="comment-time">⏱ 0:12:34</div>
-          <div class="comment-text">הקטע הזה ארוך מדי, אולי לקצר ב-30 שניות.</div>
+      <!-- UPSELL: More Reels -->
+      <div class="upsell-card">
+        <div class="upsell-title">רוצה עוד רילסים?</div>
+        <div class="upsell-desc">
+          סימנת <strong>5 רילסים</strong> — בדיוק מה שכלול בחבילה. כל ריל נוסף מעבר לכך — 150₪.
         </div>
-        <div class="comment-item">
-          <div class="comment-time">⏱ 0:28:15</div>
-          <div class="comment-text">תוריד את ההפרעה ברקע (נדמה לי שזה מקרר).</div>
-        </div>
-        <div class="comment-item">
-          <div class="comment-time">⏱ 0:48:20</div>
-          <div class="comment-text">מעולה! זה הקטע שצריך להיות הפתיח של הפרק 💯</div>
+        <div class="upsell-row">
+          <div class="upsell-stepper">
+            <button class="stepper-btn">−</button>
+            <span class="stepper-val">2</span>
+            <button class="stepper-btn">+</button>
+          </div>
+          <div class="upsell-total">
+            <span>300₪</span>
+            <small>· סה"כ</small>
+          </div>
+          <button class="upsell-btn">הוסף</button>
         </div>
       </div>
     </div>
