@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>גלריית מסכים | הבונקר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --black-soft: #111111;
+  --black-medium: #181818;
+  --black-light: #242424;
+  --white: #ffffff;
+  --red: #D32020;
+  --red-dark: #b31818;
+  --red-light: #ef4444;
+  --red-glow: rgba(211, 32, 32, 0.15);
+  --gray-400: #909090;
+  --gray-500: #585858;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(211, 32, 32, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 100%, rgba(211, 32, 32, 0.04) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 60px 32px; }
+.header { text-align: center; margin-bottom: 48px; }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.rec-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 20px rgba(211, 32, 32, 0.6), 0 0 6px var(--red);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
+.logo { font-size: 38px; font-weight: 900; letter-spacing: -1px; }
+.badge {
+  display: inline-block;
+  background: var(--red-glow);
+  color: var(--red-light);
+  border: 1px solid rgba(211, 32, 32, 0.3);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 18px;
+}
+.title {
+  font-size: 44px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+.title .accent { color: var(--red); }
+.subtitle {
+  color: var(--gray-400);
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+.screen-card {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.screen-card:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(211, 32, 32, 0.15);
+}
+.screen-preview {
+  aspect-ratio: 16/10;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.preview-frame {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-icon {
+  font-size: 80px;
+  opacity: 0.4;
+}
+.preview-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--red);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+}
+.screen-card-body { padding: 24px; flex: 1; }
+.screen-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--red-light);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.screen-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+.screen-desc {
+  font-size: 13px;
+  color: var(--gray-400);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.screen-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.feature-tag {
+  background: var(--black-light);
+  color: var(--gray-400);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  font-family: 'Inter', sans-serif;
+}
+.screen-cta {
+  color: var(--red-light);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.footer-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.footer-link {
+  color: var(--gray-400);
+  text-decoration: none;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+.footer-link:hover { color: var(--red-light); }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="brand">
+      <div class="rec-dot"></div>
+      <div class="logo">הבונקר</div>
+    </div>
+    <div class="badge">SCREEN MOCKUPS · V1</div>
+    <h1 class="title">גלריית <span class="accent">מסכים</span></h1>
+    <p class="subtitle">שלושת המסכים המרכזיים של מערכת ניהול האולפן. עיצוב סופי, מוכן לפיתוח. RTL native, Heebo + Inter.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- Screen 1: Client Portal -->
+    <a href="./client-portal.html" class="screen-card" target="_blank">
+      <div class="screen-preview">
+        <div class="preview-frame">
+          <div style="text-align: center; padding: 32px;">
+            <div style="display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 20px;">
+              <div class="rec-dot" style="width: 10px; height: 10px;"></div>
+              <span style="font-weight: 800; font-size: 16px;">הבונקר · PORTAL</span>
+            </div>
+            <div style="background: #000; border-radius: 10px; aspect-ratio: 16/9; max-width: 280px; margin: 0 auto; position: relative; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div style="margin-top: 16px; display: flex; gap: 4px; justify-content: center;">
+              <div style="height: 4px; width: 30px; background: var(--red); border-radius: 2px;"></div>
+              <div style="height: 4px; width: 50px; background: rgba(255,255,255,0.2); border-radius: 2px;"></div>
+              <div style="height: 4px; width: 20px; background: var(--red); border-radius: 2px;"></div>
+              <div style="height: 4px; width: 80px; background: rgba(255,255,255,0.2); border-radius: 2px;"></div>
+              <div style="height: 4px; width: 25px; background: var(--red); border-radius: 2px;"></div>
+            </div>
+          </div>
+        </div>
+        <span class="preview-badge">★ הלב</span>
+      </div>
+      <div class="screen-card-body">
+        <div class="screen-number">01 · CLIENT</div>
+        <div class="screen-title">פורטל לקוח</div>
+        <div class="screen-desc">המסך הקריטי. הלקוח צופה בפרק, מסמן Reels על Timeline, משאיר הערות ממוקדות-זמן ושולח לבונקר.</div>
+        <div class="screen-features">
+          <span class="feature-tag">Video Player</span>
+          <span class="feature-tag">Timeline Markers</span>
+          <span class="feature-tag">I/O Shortcuts</span>
+          <span class="feature-tag">Speed Control</span>
+          <span class="feature-tag">Comments</span>
+        </div>
+        <div class="screen-cta">פתח מסך →</div>
+      </div>
+    </a>
+
+    <!-- Screen 2: Admin Dashboard -->
+    <a href="./admin-dashboard.html" class="screen-card" target="_blank">
+      <div class="screen-preview">
+        <div class="preview-frame">
+          <div style="display: flex; gap: 8px; padding: 16px; width: 100%; height: 100%; align-items: stretch;">
+            <div style="width: 25%; background: var(--black-soft); border-radius: 8px; padding: 12px;">
+              <div style="height: 8px; background: var(--red); border-radius: 4px; width: 60%; margin-bottom: 12px;"></div>
+              <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 6px;"></div>
+              <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 6px;"></div>
+              <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;"></div>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+                <div style="background: var(--black-soft); border-radius: 6px; padding: 10px; text-align: center;"><div style="font-family: Inter; font-weight: 800; color: var(--red-light); font-size: 14px;">7</div></div>
+                <div style="background: var(--black-soft); border-radius: 6px; padding: 10px; text-align: center;"><div style="font-family: Inter; font-weight: 800; color: var(--red-light); font-size: 14px;">4</div></div>
+                <div style="background: var(--black-soft); border-radius: 6px; padding: 10px; text-align: center;"><div style="font-family: Inter; font-weight: 800; color: var(--red-light); font-size: 14px;">9</div></div>
+                <div style="background: var(--black-soft); border-radius: 6px; padding: 10px; text-align: center;"><div style="font-family: Inter; font-weight: 800; color: var(--red-light); font-size: 14px;">18</div></div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; flex: 1;">
+                <div style="background: var(--black-soft); border-radius: 4px; padding: 6px;"><div style="height: 8px; background: var(--gray-400); border-radius: 2px; width: 50%; margin-bottom: 6px;"></div><div style="height: 14px; background: var(--black-light); border-radius: 3px; margin-bottom: 4px;"></div><div style="height: 14px; background: var(--black-light); border-radius: 3px;"></div></div>
+                <div style="background: var(--black-soft); border-radius: 4px; padding: 6px;"><div style="height: 8px; background: var(--yellow); border-radius: 2px; width: 50%; margin-bottom: 6px;"></div><div style="height: 14px; background: var(--black-light); border-radius: 3px; margin-bottom: 4px;"></div></div>
+                <div style="background: var(--black-soft); border-radius: 4px; padding: 6px;"><div style="height: 8px; background: var(--red); border-radius: 2px; width: 50%; margin-bottom: 6px;"></div><div style="height: 14px; background: var(--black-light); border-radius: 3px; margin-bottom: 4px;"></div><div style="height: 14px; background: var(--black-light); border-radius: 3px;"></div></div>
+                <div style="background: var(--black-soft); border-radius: 4px; padding: 6px;"><div style="height: 8px; background: #3b82f6; border-radius: 2px; width: 50%; margin-bottom: 6px;"></div><div style="height: 14px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 3px;"></div></div>
+                <div style="background: var(--black-soft); border-radius: 4px; padding: 6px;"><div style="height: 8px; background: #16a34a; border-radius: 2px; width: 50%; margin-bottom: 6px;"></div><div style="height: 14px; background: var(--black-light); border-radius: 3px; margin-bottom: 4px;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="preview-badge">DASHBOARD</span>
+      </div>
+      <div class="screen-card-body">
+        <div class="screen-number">02 · ADMIN</div>
+        <div class="screen-title">דאשבורד הצוות</div>
+        <div class="screen-desc">תמונת מצב מלאה: מטריקות שבועיות, התראות, לוח Kanban עם כל הפרקים לפי סטטוס. נקודת ההתחלה של אלון בכל בוקר.</div>
+        <div class="screen-features">
+          <span class="feature-tag">Kanban Board</span>
+          <span class="feature-tag">Live Stats</span>
+          <span class="feature-tag">Notifications</span>
+          <span class="feature-tag">Quick Actions</span>
+        </div>
+        <div class="screen-cta">פתח מסך →</div>
+      </div>
+    </a>
+
+    <!-- Screen 3: Episode Management -->
+    <a href="./episode-management.html" class="screen-card" target="_blank">
+      <div class="screen-preview">
+        <div class="preview-frame">
+          <div style="padding: 16px; width: 100%; height: 100%;">
+            <div style="display: flex; gap: 6px; margin-bottom: 12px; align-items: center;">
+              <div style="background: var(--red-glow); border: 1px solid rgba(211,32,32,0.3); padding: 3px 8px; border-radius: 12px; font-size: 9px; color: var(--red-light); font-weight: 800;">דניאל</div>
+              <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); padding: 3px 8px; border-radius: 12px; font-size: 9px; color: #3b82f6; font-weight: 800;">תיקונים</div>
+            </div>
+            <div style="height: 18px; background: white; opacity: 0.9; border-radius: 4px; width: 80%; margin-bottom: 16px;"></div>
+            <div style="background: #000; height: 80px; border-radius: 8px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center;">
+              <div style="background: var(--red); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;">
+              <div style="background: var(--black-soft); border-radius: 4px; padding: 6px; text-align: center;"><div style="background: var(--red); color: white; width: 16px; height: 16px; border-radius: 3px; font-family: Inter; font-size: 9px; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px;">1</div><div style="height: 4px; background: var(--black-light); border-radius: 1px;"></div></div>
+              <div style="background: var(--black-soft); border-radius: 4px; padding: 6px; text-align: center;"><div style="background: var(--red); color: white; width: 16px; height: 16px; border-radius: 3px; font-family: Inter; font-size: 9px; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px;">2</div><div style="height: 4px; background: var(--black-light); border-radius: 1px;"></div></div>
+              <div style="background: var(--black-soft); border-radius: 4px; padding: 6px; text-align: center;"><div style="background: var(--red); color: white; width: 16px; height: 16px; border-radius: 3px; font-family: Inter; font-size: 9px; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px;">3</div><div style="height: 4px; background: var(--black-light); border-radius: 1px;"></div></div>
+              <div style="background: var(--black-soft); border-radius: 4px; padding: 6px; text-align: center;"><div style="background: var(--red); color: white; width: 16px; height: 16px; border-radius: 3px; font-family: Inter; font-size: 9px; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px;">4</div><div style="height: 4px; background: var(--black-light); border-radius: 1px;"></div></div>
+              <div style="background: var(--black-soft); border-radius: 4px; padding: 6px; text-align: center;"><div style="background: var(--red); color: white; width: 16px; height: 16px; border-radius: 3px; font-family: Inter; font-size: 9px; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px;">5</div><div style="height: 4px; background: var(--black-light); border-radius: 1px;"></div></div>
+            </div>
+          </div>
+        </div>
+        <span class="preview-badge">EPISODE</span>
+      </div>
+      <div class="screen-card-body">
+        <div class="screen-number">03 · ADMIN</div>
+        <div class="screen-title">ניהול פרק</div>
+        <div class="screen-desc">המסך שבו כל פרק חי. תצוגה מלאה: סטטוס, רילס שהלקוח בחר, הערות, היסטוריית גרסאות, פעולה הבאה.</div>
+        <div class="screen-features">
+          <span class="feature-tag">Feedback Inbox</span>
+          <span class="feature-tag">Status Flow</span>
+          <span class="feature-tag">Reels Grid</span>
+          <span class="feature-tag">Export</span>
+        </div>
+        <div class="screen-cta">פתח מסך →</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer-links">
+    <a href="../" class="footer-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      חזרה ל-Hub
+    </a>
+    <a href="../cto-implementation-guide.html" class="footer-link">📄 מסמך CTO</a>
+    <a href="https://github.com/Alon17-12/bunker-designs" class="footer-link" target="_blank">💻 GitHub Repo</a>
+  </div>
+
+</div>
+
+</body>
+</html>

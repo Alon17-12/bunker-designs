@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פורטל לקוח | הבונקר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --black-soft: #111111;
+  --black-medium: #181818;
+  --black-light: #242424;
+  --gray-700: #404040;
+  --gray-500: #585858;
+  --gray-400: #909090;
+  --gray-200: #d4d4d4;
+  --white: #ffffff;
+  --red: #D32020;
+  --red-dark: #b31818;
+  --red-light: #ef4444;
+  --red-glow: rgba(211, 32, 32, 0.15);
+  --green: #16a34a;
+  --yellow: #eab308;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+button { font-family: inherit; cursor: pointer; }
+input, textarea { font-family: inherit; }
+
+/* === HEADER === */
+.header {
+  background: var(--black-soft);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rec-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 16px rgba(211, 32, 32, 0.6), 0 0 4px var(--red);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+.brand-logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+.brand-subtitle {
+  font-size: 10px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 8px;
+  padding-right: 12px;
+  border-right: 1px solid var(--border);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.user-greeting .label { color: var(--gray-400); }
+.user-greeting strong { font-weight: 700; }
+.help-btn {
+  background: var(--black-light);
+  border: 1px solid var(--border);
+  color: var(--gray-400);
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  margin-right: 16px;
+}
+.help-btn:hover { background: var(--black-medium); color: var(--white); }
+
+/* === MAIN LAYOUT === */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+  min-height: calc(100vh - 73px);
+}
+.main-content {
+  padding: 24px 32px;
+  border-left: 1px solid var(--border);
+}
+.sidebar {
+  background: var(--black-soft);
+  padding: 24px;
+  overflow-y: auto;
+  max-height: calc(100vh - 73px);
+  position: sticky;
+  top: 73px;
+}
+
+/* === EPISODE HEADER === */
+.episode-header {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.episode-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.version-badge {
+  background: var(--red-glow);
+  color: var(--red-light);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(211, 32, 32, 0.3);
+}
+.episode-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.episode-instructions {
+  font-size: 14px;
+  color: var(--gray-400);
+  line-height: 1.7;
+}
+.episode-instructions strong { color: var(--white); }
+
+/* === VIDEO PLAYER === */
+.player-container {
+  position: relative;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--border);
+}
+.player-video {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player-poster {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(211, 32, 32, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(50, 50, 50, 0.2) 0%, transparent 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.poster-content {
+  text-align: center;
+  z-index: 2;
+}
+.poster-podcast {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--red-light);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+}
+.poster-title {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  max-width: 600px;
+}
+.poster-guest {
+  font-size: 14px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(0,0,0,0.2);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.play-overlay:hover { opacity: 1; }
+.play-btn {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(211, 32, 32, 0.4);
+  transition: transform 0.15s;
+}
+.play-btn:hover { transform: scale(1.1); }
+.player-controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 16px 20px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 4;
+}
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--gray-200);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+}
+.progress-fill {
+  height: 100%;
+  width: 32%;
+  background: var(--red);
+  border-radius: 2px;
+  position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: -7px; top: 50%;
+  transform: translateY(-50%);
+  width: 14px; height: 14px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+}
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.control-btn {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  width: 34px; height: 34px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.control-btn:hover { background: rgba(255,255,255,0.15); }
+.speed-control {
+  position: relative;
+  margin-right: auto;
+}
+.speed-btn {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border-strong);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+}
+.speed-btn:hover { background: var(--red-glow); border-color: var(--red); }
+.speed-btn.active { background: var(--red); border-color: var(--red); }
+
+/* === TIMELINE === */
+.timeline-section {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.timeline-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+}
+.timeline-hint {
+  font-size: 11px;
+  color: var(--gray-500);
+}
+.timeline-hint kbd {
+  background: var(--black-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: var(--red-light);
+  margin: 0 2px;
+}
+.timeline-track {
+  position: relative;
+  height: 56px;
+  background: var(--black);
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.timeline-waveform {
+  position: absolute;
+  inset: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+.wave-bar {
+  flex: 1;
+  background: var(--gray-700);
+  border-radius: 1px;
+  min-width: 2px;
+}
+.wave-bar.played { background: var(--red); opacity: 0.5; }
+.timeline-playhead {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--red);
+  left: 32%;
+  z-index: 3;
+}
+.timeline-playhead::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px; height: 12px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red);
+}
+.reel-marker {
+  position: absolute;
+  height: 100%;
+  background: rgba(211, 32, 32, 0.25);
+  border-left: 2px solid var(--red);
+  border-right: 2px solid var(--red);
+  top: 0;
+  z-index: 2;
+}
+.reel-marker-label {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: var(--red);
+  color: var(--white);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+.comment-marker {
+  position: absolute;
+  top: 50%;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2px solid var(--black);
+  transform: translate(50%, -50%);
+  z-index: 2;
+  cursor: pointer;
+}
+.comment-marker:hover { transform: translate(50%, -50%) scale(1.2); }
+.timeline-times {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--gray-500);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* === GENERAL NOTES === */
+.general-notes {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.notes-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+}
+.notes-input {
+  width: 100%;
+  min-height: 80px;
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--white);
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.notes-input:focus { border-color: var(--red); }
+.notes-input::placeholder { color: var(--gray-500); }
+
+/* === SUBMIT BAR === */
+.submit-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 8px;
+}
+.submit-summary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--gray-400);
+}
+.summary-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.summary-stat strong { color: var(--white); font-weight: 700; font-size: 15px; }
+.btn-submit {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 16px 40px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 20px rgba(211, 32, 32, 0.3);
+  transition: all 0.15s;
+  position: relative;
+}
+.btn-submit:hover {
+  background: var(--red-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(211, 32, 32, 0.4);
+}
+.btn-submit::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--white);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* === SIDEBAR === */
+.sidebar-section {
+  margin-bottom: 28px;
+}
+.sidebar-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.sidebar-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+}
+.sidebar-section-count {
+  background: var(--black-light);
+  color: var(--gray-400);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+.sidebar-section-count.has-items { background: var(--red); color: var(--white); }
+
+/* === REELS LIST === */
+.reels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.reel-item {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  transition: all 0.15s;
+  cursor: pointer;
+  position: relative;
+}
+.reel-item:hover {
+  background: var(--black-medium);
+  border-color: var(--border-strong);
+}
+.reel-number {
+  width: 26px; height: 26px;
+  background: var(--red);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+}
+.reel-content {
+  flex: 1;
+  min-width: 0;
+}
+.reel-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reel-time {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.reel-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.reel-item:hover .reel-actions { opacity: 1; }
+.reel-action-btn {
+  background: transparent;
+  border: none;
+  color: var(--gray-400);
+  width: 26px; height: 26px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.reel-action-btn:hover { background: var(--black-light); color: var(--white); }
+.reel-action-btn.danger:hover { background: rgba(211, 32, 32, 0.15); color: var(--red-light); }
+
+.add-reel-btn {
+  background: transparent;
+  border: 2px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 14px;
+  color: var(--gray-400);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+  width: 100%;
+}
+.add-reel-btn:hover {
+  border-color: var(--red);
+  color: var(--red-light);
+  background: rgba(211, 32, 32, 0.04);
+}
+
+/* === COMMENTS === */
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.comment-item {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-right: 3px solid var(--yellow);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.comment-item.general { border-right-color: var(--gray-500); }
+.comment-time {
+  font-size: 11px;
+  color: var(--yellow);
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 4px;
+}
+.comment-item.general .comment-time { color: var(--gray-400); }
+.comment-text { color: var(--gray-200); }
+
+.empty-state {
+  text-align: center;
+  padding: 24px 12px;
+  color: var(--gray-500);
+  font-size: 13px;
+  background: var(--black);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+.empty-state-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+
+/* === KEYBOARD HELP MODAL === */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: auto; }
+.modal {
+  background: var(--black-soft);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 480px;
+  width: 90%;
+  transform: scale(0.96);
+  transition: transform 0.2s;
+}
+.modal-backdrop.open .modal { transform: scale(1); }
+.modal-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.modal-subtitle {
+  font-size: 13px;
+  color: var(--gray-400);
+  margin-bottom: 24px;
+}
+.shortcuts-grid {
+  display: grid;
+  gap: 12px;
+}
+.shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.shortcut-item:last-child { border-bottom: none; }
+.shortcut-keys {
+  display: flex;
+  gap: 4px;
+}
+.shortcut-keys kbd {
+  background: var(--black);
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--white);
+  min-width: 28px;
+  text-align: center;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--black-light);
+  border: 1px solid var(--border);
+  color: var(--gray-400);
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal { position: relative; }
+
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; max-height: none; border-top: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="brand">
+    <div class="rec-dot"></div>
+    <div class="brand-logo">הבונקר</div>
+    <div class="brand-subtitle">CLIENT PORTAL</div>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <div class="user-greeting">
+      <span class="label">שלום,</span>
+      <strong>דניאל כהן</strong>
+    </div>
+    <button class="help-btn" onclick="document.querySelector('.modal-backdrop').classList.add('open')" title="קיצורי מקלדת">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ═══ MAIN LAYOUT ═══ -->
+<div class="layout">
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- Episode Header -->
+    <div class="episode-header">
+      <div class="episode-meta">
+        <span>פרק 24</span>
+        <span>•</span>
+        <span>14.05.2026</span>
+        <span>•</span>
+        <span class="version-badge">גרסה 1</span>
+      </div>
+      <h1 class="episode-title">איך בונים סטארטאפ ב-2026 — שיחה עם רוני סגל</h1>
+      <p class="episode-instructions">
+        סמן את הקטעים שמדברים אליך לרילס באמצעות <strong>I</strong> (התחלה) ו-<strong>O</strong> (סיום). השאר הערות תוך כדי צפייה - לחיצה כפולה על הציר.
+      </p>
+    </div>
+
+    <!-- Video Player -->
+    <div class="player-container">
+      <div class="player-video">
+        <div class="player-poster">
+          <div class="poster-content">
+            <div class="poster-podcast">🎙 הבונקר · פרק 24</div>
+            <div class="poster-title">איך בונים סטארטאפ ב-2026</div>
+            <div class="poster-guest">עם רוני סגל</div>
+          </div>
+        </div>
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="player-controls">
+          <div class="progress-row">
+            <span>23:45</span>
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <span>1:14:20</span>
+          </div>
+          <div class="controls-row">
+            <button class="control-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+            <button class="control-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></button>
+            <button class="control-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M16 6h2v12h-2zm-9.5 6L15 6v12z"/></svg></button>
+            <div class="speed-control">
+              <button class="speed-btn active">1.5x</button>
+            </div>
+            <button class="control-btn" title="כתוביות"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z"/></svg></button>
+            <button class="control-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline-section">
+      <div class="timeline-header">
+        <div class="timeline-title">⚡ ציר זמן — סימון Reels</div>
+        <div class="timeline-hint">
+          לחץ <kbd>I</kbd> להתחלה · <kbd>O</kbd> לסיום · <kbd>C</kbd> להוסיף הערה
+        </div>
+      </div>
+      <div class="timeline-track" id="timeline">
+        <div class="timeline-waveform" id="waveform"></div>
+        <!-- Reel markers -->
+        <div class="reel-marker" style="left: 1.6%; width: 4.4%;">
+          <span class="reel-marker-label">#1</span>
+        </div>
+        <div class="reel-marker" style="left: 7.3%; width: 5.5%;">
+          <span class="reel-marker-label">#2</span>
+        </div>
+        <div class="reel-marker" style="left: 20%; width: 4%;">
+          <span class="reel-marker-label">#3</span>
+        </div>
+        <div class="reel-marker" style="left: 45%; width: 5%;">
+          <span class="reel-marker-label">#4</span>
+        </div>
+        <div class="reel-marker" style="left: 72%; width: 6%;">
+          <span class="reel-marker-label">#5</span>
+        </div>
+        <!-- Comment markers -->
+        <div class="comment-marker" style="left: 16.5%;" title="הערה: הקטע ארוך מדי"></div>
+        <div class="comment-marker" style="left: 38%;" title="הערה: תוריד את ההפרעה"></div>
+        <div class="comment-marker" style="left: 65%;" title="הערה: מעולה!"></div>
+        <!-- Playhead -->
+        <div class="timeline-playhead"></div>
+      </div>
+      <div class="timeline-times">
+        <span>00:00</span>
+        <span>0:18:35</span>
+        <span>0:37:10</span>
+        <span>0:55:45</span>
+        <span>1:14:20</span>
+      </div>
+    </div>
+
+    <!-- General Notes -->
+    <div class="general-notes">
+      <div class="notes-label">📝 הערות כלליות על הפרק</div>
+      <textarea class="notes-input" placeholder="לדוגמה: הפתיח קצת ארוך, להתחיל ישר עם השאלה הראשונה. הצליל בדקה 45 לא ברור...">הפתיח קצת ארוך, אפשר לחתוך משנייה 0:15 ועד 0:38. את הקטע על מימון - בעצם הכי מעניין בכל הפרק, אולי שווה לחזק אותו בכותרת.</textarea>
+    </div>
+
+    <!-- Submit Bar -->
+    <div class="submit-bar">
+      <div class="submit-summary">
+        <div class="summary-stat">
+          <strong>5</strong>
+          <span>רילס</span>
+        </div>
+        <div class="summary-stat">
+          <strong>3</strong>
+          <span>הערות ממוקדות</span>
+        </div>
+        <div class="summary-stat">
+          <strong>1</strong>
+          <span>הערה כללית</span>
+        </div>
+      </div>
+      <button class="btn-submit">
+        סיימתי — שלח לבונקר
+      </button>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- REELS SECTION -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-section-title">🎬 Reels שסומנו</div>
+        <span class="sidebar-section-count has-items">5</span>
+      </div>
+      <div class="reels-list">
+        <div class="reel-item">
+          <div class="reel-number">1</div>
+          <div class="reel-content">
+            <div class="reel-title">הפתיח שמושך</div>
+            <div class="reel-time">0:00:18 → 0:00:48</div>
+          </div>
+          <div class="reel-actions">
+            <button class="reel-action-btn" title="ערוך"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="reel-action-btn danger" title="מחק"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+          </div>
+        </div>
+        <div class="reel-item">
+          <div class="reel-number">2</div>
+          <div class="reel-content">
+            <div class="reel-title">למה רוב הסטארטאפים נכשלים</div>
+            <div class="reel-time">0:05:30 → 0:09:22</div>
+          </div>
+          <div class="reel-actions">
+            <button class="reel-action-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="reel-action-btn danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+          </div>
+        </div>
+        <div class="reel-item">
+          <div class="reel-number">3</div>
+          <div class="reel-content">
+            <div class="reel-title">העצה ששינתה לי את החיים</div>
+            <div class="reel-time">0:15:40 → 0:18:25</div>
+          </div>
+          <div class="reel-actions">
+            <button class="reel-action-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="reel-action-btn danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+          </div>
+        </div>
+        <div class="reel-item">
+          <div class="reel-number">4</div>
+          <div class="reel-content">
+            <div class="reel-title">איך גייסתי 5 מיליון ב-3 חודשים</div>
+            <div class="reel-time">0:33:50 → 0:37:25</div>
+          </div>
+          <div class="reel-actions">
+            <button class="reel-action-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="reel-action-btn danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+          </div>
+        </div>
+        <div class="reel-item">
+          <div class="reel-number">5</div>
+          <div class="reel-content">
+            <div class="reel-title">המחשבה שמפחידה אותי</div>
+            <div class="reel-time">0:53:30 → 0:57:48</div>
+          </div>
+          <div class="reel-actions">
+            <button class="reel-action-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="reel-action-btn danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+          </div>
+        </div>
+        <button class="add-reel-btn">
+          <span style="font-size: 18px;">+</span>
+          <span>הוסף ריל מהזמן הנוכחי</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- COMMENTS SECTION -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-section-title">💬 הערות ממוקדות</div>
+        <span class="sidebar-section-count has-items">3</span>
+      </div>
+      <div class="comments-list">
+        <div class="comment-item">
+          <div class="comment-time">⏱ 0:12:34</div>
+          <div class="comment-text">הקטע הזה ארוך מדי, אולי לקצר ב-30 שניות.</div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-time">⏱ 0:28:15</div>
+          <div class="comment-text">תוריד את ההפרעה ברקע (נדמה לי שזה מקרר).</div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-time">⏱ 0:48:20</div>
+          <div class="comment-text">מעולה! זה הקטע שצריך להיות הפתיח של הפרק 💯</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- ═══ KEYBOARD SHORTCUTS MODAL ═══ -->
+<div class="modal-backdrop" onclick="this.classList.remove('open')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="document.querySelector('.modal-backdrop').classList.remove('open')">×</button>
+    <div class="modal-title">⌨️ קיצורי מקלדת</div>
+    <div class="modal-subtitle">העזרים המהירים של הפורטל. תשתמש בהם תוך כדי צפייה.</div>
+    <div class="shortcuts-grid">
+      <div class="shortcut-item"><span>Play / Pause</span><span class="shortcut-keys"><kbd>Space</kbd></span></div>
+      <div class="shortcut-item"><span>קפיצה 5 שניות</span><span class="shortcut-keys"><kbd>←</kbd> <kbd>→</kbd></span></div>
+      <div class="shortcut-item"><span>קפיצה 30 שניות</span><span class="shortcut-keys"><kbd>Shift</kbd> <kbd>←/→</kbd></span></div>
+      <div class="shortcut-item"><span>סימון התחלת ריל</span><span class="shortcut-keys"><kbd>I</kbd></span></div>
+      <div class="shortcut-item"><span>סימון סיום ריל</span><span class="shortcut-keys"><kbd>O</kbd></span></div>
+      <div class="shortcut-item"><span>הוסף הערה</span><span class="shortcut-keys"><kbd>C</kbd></span></div>
+      <div class="shortcut-item"><span>שינוי מהירות</span><span class="shortcut-keys"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> <kbd>5</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Generate waveform bars
+const waveform = document.getElementById('waveform');
+const heights = [];
+for (let i = 0; i < 120; i++) {
+  const h = 20 + Math.sin(i * 0.3) * 15 + Math.random() * 25;
+  heights.push(h);
+}
+heights.forEach((h, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'wave-bar' + (i < 38 ? ' played' : '');
+  bar.style.height = h + '%';
+  waveform.appendChild(bar);
+});
+</script>
+</body>
+</html>

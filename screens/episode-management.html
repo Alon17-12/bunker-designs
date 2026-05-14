@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ניהול פרק | הבונקר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --black-soft: #111111;
+  --black-medium: #181818;
+  --black-light: #242424;
+  --gray-700: #404040;
+  --gray-500: #585858;
+  --gray-400: #909090;
+  --gray-200: #d4d4d4;
+  --white: #ffffff;
+  --red: #D32020;
+  --red-dark: #b31818;
+  --red-light: #ef4444;
+  --red-glow: rgba(211, 32, 32, 0.15);
+  --green: #16a34a;
+  --green-glow: rgba(22, 163, 74, 0.15);
+  --yellow: #eab308;
+  --yellow-glow: rgba(234, 179, 8, 0.15);
+  --blue: #3b82f6;
+  --blue-glow: rgba(59, 130, 246, 0.15);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; }
+
+.app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+/* === SIDEBAR (compact version) === */
+.sidebar {
+  background: var(--black-soft);
+  border-left: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-brand {
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 12px; margin-bottom: 36px;
+}
+.rec-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 16px rgba(211, 32, 32, 0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
+.sidebar-logo { font-size: 20px; font-weight: 900; }
+.nav-label {
+  font-size: 10px; font-weight: 600; color: var(--gray-500);
+  text-transform: uppercase; letter-spacing: 2px;
+  padding: 0 12px; margin: 0 0 8px;
+  font-family: 'Inter', sans-serif;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 8px;
+  color: var(--gray-400); text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  margin-bottom: 2px; position: relative;
+  transition: all 0.15s;
+}
+.nav-item:hover { background: var(--black-light); color: var(--white); }
+.nav-item.active {
+  background: var(--red-glow); color: var(--red-light); font-weight: 700;
+}
+.nav-item.active::before {
+  content: ''; position: absolute; right: 0; top: 8px; bottom: 8px;
+  width: 3px; background: var(--red); border-radius: 2px;
+}
+.nav-icon { width: 18px; height: 18px; }
+
+/* === MAIN === */
+.main {
+  padding: 24px 36px 60px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 28px;
+  align-items: start;
+}
+.content { min-width: 0; }
+.right-panel {
+  position: sticky;
+  top: 24px;
+}
+
+/* === BREADCRUMB === */
+.breadcrumb {
+  display: flex; gap: 8px; align-items: center;
+  font-size: 12px; color: var(--gray-400);
+  margin-bottom: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+.breadcrumb a { color: var(--gray-400); text-decoration: none; }
+.breadcrumb a:hover { color: var(--white); }
+.breadcrumb .sep { color: var(--gray-700); }
+.breadcrumb .current { color: var(--white); font-weight: 600; }
+
+/* === EPISODE HEADER === */
+.episode-header {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.episode-meta-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.customer-pill {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.customer-avatar {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+}
+.status-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.status-pill.revisions {
+  background: var(--blue-glow);
+  color: var(--blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.status-pill.revisions::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue); box-shadow: 0 0 8px var(--blue);
+}
+.version-badge {
+  background: var(--red-glow);
+  color: var(--red-light);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid rgba(211, 32, 32, 0.3);
+}
+.episode-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 4px 0;
+}
+.episode-tagline {
+  font-size: 14px;
+  color: var(--gray-400);
+}
+.episode-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.btn {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(211, 32, 32, 0.3);
+}
+.btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--black-soft);
+  color: var(--white);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--black-medium); border-color: var(--border-strong); }
+.btn-ghost {
+  background: transparent;
+  color: var(--gray-400);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { color: var(--white); background: var(--black-soft); }
+
+/* === SECTION CARDS === */
+.section {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-count {
+  background: var(--red);
+  color: var(--white);
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+}
+
+/* === VIDEO THUMBNAIL === */
+.video-card {
+  position: relative;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--border);
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(211, 32, 32, 0.1) 0%, transparent 40%),
+    linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-card-content {
+  text-align: center;
+}
+.video-card-podcast {
+  font-size: 12px;
+  color: var(--red-light);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+}
+.video-card-title {
+  font-size: 28px;
+  font-weight: 900;
+  max-width: 500px;
+  letter-spacing: -0.5px;
+}
+.video-card-time {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  background: rgba(0,0,0,0.7);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+.video-card-version {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--red);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+}
+
+/* === REELS GRID === */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.reel-card {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.reel-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.reel-card-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.reel-num {
+  background: var(--red);
+  color: var(--white);
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+}
+.reel-status-tiny {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+}
+.reel-status-tiny.pending {
+  background: var(--yellow-glow); color: var(--yellow);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+.reel-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  height: 38px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.reel-card-time {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+.reel-card-duration {
+  color: var(--red-light);
+  font-weight: 700;
+}
+
+/* === FEEDBACK ITEMS === */
+.feedback-item {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-right: 3px solid var(--yellow);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.feedback-item.general { border-right-color: var(--gray-500); }
+.feedback-time-badge {
+  background: var(--black-light);
+  color: var(--yellow);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.feedback-item.general .feedback-time-badge {
+  color: var(--gray-400);
+}
+.feedback-text {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--gray-200);
+}
+.feedback-action {
+  background: var(--black-light);
+  border: 1px solid var(--border);
+  color: var(--gray-400);
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.feedback-action:hover { color: var(--green); border-color: var(--green); background: var(--green-glow); }
+.feedback-action.done { color: var(--green); border-color: var(--green); background: var(--green-glow); }
+
+/* === RIGHT PANEL === */
+.status-flow-card {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.status-flow-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gray-400);
+  margin-bottom: 16px;
+  font-family: 'Inter', sans-serif;
+}
+.status-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  position: relative;
+}
+.status-step::before {
+  content: '';
+  position: absolute;
+  right: 13px;
+  top: 30px;
+  bottom: -10px;
+  width: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.status-step:last-child::before { display: none; }
+.status-step-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  background: var(--black-light);
+  border: 2px solid var(--border);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gray-500);
+  font-family: 'Inter', sans-serif;
+}
+.status-step.done .status-step-dot {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+.status-step.current .status-step-dot {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+  box-shadow: 0 0 0 4px var(--red-glow);
+}
+.status-step-label {
+  font-size: 13px;
+  color: var(--gray-400);
+  font-weight: 500;
+}
+.status-step.done .status-step-label { color: var(--gray-200); }
+.status-step.current .status-step-label { color: var(--white); font-weight: 700; }
+.status-step-time {
+  margin-right: auto;
+  font-size: 11px;
+  color: var(--gray-500);
+  font-family: 'Inter', sans-serif;
+}
+
+.next-action-card {
+  background: linear-gradient(135deg, var(--red-glow), transparent);
+  border: 1px solid rgba(211, 32, 32, 0.3);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.next-action-label {
+  font-size: 11px;
+  color: var(--red-light);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.next-action-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.next-action-text {
+  font-size: 13px;
+  color: var(--gray-200);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+.next-action-btn {
+  background: var(--red);
+  color: var(--white);
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.quick-info {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+}
+.quick-info-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gray-400);
+  margin-bottom: 14px;
+  font-family: 'Inter', sans-serif;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { color: var(--gray-400); }
+.info-value { color: var(--white); font-weight: 600; font-family: 'Inter', sans-serif; }
+
+@media (max-width: 1300px) {
+  .main { grid-template-columns: 1fr; }
+  .right-panel { position: static; }
+}
+@media (max-width: 700px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="rec-dot"></div>
+      <div class="sidebar-logo">הבונקר</div>
+    </div>
+
+    <div class="nav-label">ראשי</div>
+    <a href="./admin-dashboard.html" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Dashboard</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      <span>לקוחות</span>
+    </a>
+    <a href="#" class="nav-item active">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      <span>פרקים</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+      <span>תור Reels</span>
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="#">לקוחות</a>
+        <span class="sep">›</span>
+        <a href="#">דניאל כהן</a>
+        <span class="sep">›</span>
+        <span class="current">פרק 24</span>
+      </div>
+
+      <!-- Episode Header -->
+      <div class="episode-header">
+        <div class="episode-meta-row">
+          <div class="customer-pill">
+            <div class="customer-avatar">DK</div>
+            <span>דניאל כהן</span>
+          </div>
+          <span class="status-pill revisions">תיקונים מהלקוח</span>
+          <span class="version-badge">⚡ V1</span>
+        </div>
+        <h1 class="episode-title">איך בונים סטארטאפ ב-2026 — שיחה עם רוני סגל</h1>
+        <p class="episode-tagline">פרק 24 · הוקלט 10.05.2026 · נשלח ללקוח 11.05 · נענה 14.05 09:32</p>
+        <div class="episode-actions">
+          <button class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            העלה גרסה 2
+          </button>
+          <button class="btn btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            שלח עדכון ב-WhatsApp
+          </button>
+          <button class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            ייצא Reels
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Preview -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">🎬 גרסה 1 — שנשלחה ללקוח</div>
+        </div>
+        <div class="video-card">
+          <div class="video-card-content">
+            <div class="video-card-podcast">🎙 הבונקר · פרק 24</div>
+            <div class="video-card-title">איך בונים סטארטאפ ב-2026</div>
+          </div>
+          <div class="video-card-version">V1 · נשלח</div>
+          <div class="video-card-time">1:14:20</div>
+        </div>
+      </div>
+
+      <!-- Reels Selected -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">
+            🎥 Reels שהלקוח בחר
+            <span class="section-count">5</span>
+          </div>
+          <button class="btn btn-ghost" style="padding: 8px 14px; font-size: 12px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            ייצא לעורך
+          </button>
+        </div>
+        <div class="reels-grid">
+          <div class="reel-card">
+            <div class="reel-card-header">
+              <div class="reel-num">1</div>
+              <span class="reel-status-tiny pending">ממתין</span>
+            </div>
+            <div class="reel-card-title">הפתיח שמושך</div>
+            <div class="reel-card-time">
+              <span>0:00:18 → 0:00:48</span>
+              <span class="reel-card-duration">0:30</span>
+            </div>
+          </div>
+          <div class="reel-card">
+            <div class="reel-card-header">
+              <div class="reel-num">2</div>
+              <span class="reel-status-tiny pending">ממתין</span>
+            </div>
+            <div class="reel-card-title">למה רוב הסטארטאפים נכשלים</div>
+            <div class="reel-card-time">
+              <span>0:05:30 → 0:09:22</span>
+              <span class="reel-card-duration">3:52</span>
+            </div>
+          </div>
+          <div class="reel-card">
+            <div class="reel-card-header">
+              <div class="reel-num">3</div>
+              <span class="reel-status-tiny pending">ממתין</span>
+            </div>
+            <div class="reel-card-title">העצה ששינתה לי את החיים</div>
+            <div class="reel-card-time">
+              <span>0:15:40 → 0:18:25</span>
+              <span class="reel-card-duration">2:45</span>
+            </div>
+          </div>
+          <div class="reel-card">
+            <div class="reel-card-header">
+              <div class="reel-num">4</div>
+              <span class="reel-status-tiny pending">ממתין</span>
+            </div>
+            <div class="reel-card-title">איך גייסתי 5 מיליון ב-3 חודשים</div>
+            <div class="reel-card-time">
+              <span>0:33:50 → 0:37:25</span>
+              <span class="reel-card-duration">3:35</span>
+            </div>
+          </div>
+          <div class="reel-card">
+            <div class="reel-card-header">
+              <div class="reel-num">5</div>
+              <span class="reel-status-tiny pending">ממתין</span>
+            </div>
+            <div class="reel-card-title">המחשבה שמפחידה אותי</div>
+            <div class="reel-card-time">
+              <span>0:53:30 → 0:57:48</span>
+              <span class="reel-card-duration">4:18</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Feedback -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">
+            💬 הערות הלקוח
+            <span class="section-count">4</span>
+          </div>
+        </div>
+        <div class="feedback-item">
+          <div class="feedback-time-badge">⏱ 0:12:34</div>
+          <div class="feedback-text">הקטע הזה ארוך מדי, אולי לקצר ב-30 שניות.</div>
+          <button class="feedback-action" title="סמן כטופל"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>
+        </div>
+        <div class="feedback-item">
+          <div class="feedback-time-badge">⏱ 0:28:15</div>
+          <div class="feedback-text">תוריד את ההפרעה ברקע (נדמה לי שזה מקרר).</div>
+          <button class="feedback-action" title="סמן כטופל"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>
+        </div>
+        <div class="feedback-item">
+          <div class="feedback-time-badge">⏱ 0:48:20</div>
+          <div class="feedback-text">מעולה! זה הקטע שצריך להיות הפתיח של הפרק 💯</div>
+          <button class="feedback-action done" title="טופל"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>
+        </div>
+        <div class="feedback-item general">
+          <div class="feedback-time-badge">כללי</div>
+          <div class="feedback-text"><strong>הפתיח קצת ארוך</strong>, אפשר לחתוך משנייה 0:15 ועד 0:38. את הקטע על מימון - בעצם הכי מעניין בכל הפרק, אולי שווה לחזק אותו בכותרת.</div>
+          <button class="feedback-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <aside class="right-panel">
+
+      <!-- Next Action -->
+      <div class="next-action-card">
+        <div class="next-action-label">🎯 הפעולה הבאה</div>
+        <div class="next-action-title">לעבד 5 רילס + תיקונים</div>
+        <div class="next-action-text">הלקוח החזיר פידבק עם 5 קטעי רילס לעריכה ו-4 הערות לפרק המלא. הגיע הזמן לעבוד.</div>
+        <button class="next-action-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          סמן בעבודה — שלח לעורך
+        </button>
+      </div>
+
+      <!-- Status Flow -->
+      <div class="status-flow-card">
+        <div class="status-flow-title">🚦 מצב הפרק</div>
+        <div class="status-step done">
+          <div class="status-step-dot">✓</div>
+          <div class="status-step-label">הוקלט</div>
+          <div class="status-step-time">10.05</div>
+        </div>
+        <div class="status-step done">
+          <div class="status-step-dot">✓</div>
+          <div class="status-step-label">סקירה פנימית</div>
+          <div class="status-step-time">11.05</div>
+        </div>
+        <div class="status-step done">
+          <div class="status-step-dot">✓</div>
+          <div class="status-step-label">נשלח V1</div>
+          <div class="status-step-time">11.05</div>
+        </div>
+        <div class="status-step current">
+          <div class="status-step-dot">!</div>
+          <div class="status-step-label">תיקונים התקבלו</div>
+          <div class="status-step-time">14.05</div>
+        </div>
+        <div class="status-step">
+          <div class="status-step-dot">4</div>
+          <div class="status-step-label">נשלח V2</div>
+        </div>
+        <div class="status-step">
+          <div class="status-step-dot">5</div>
+          <div class="status-step-label">אושר</div>
+        </div>
+      </div>
+
+      <!-- Quick Info -->
+      <div class="quick-info">
+        <div class="quick-info-title">ℹ️ פרטים מהירים</div>
+        <div class="info-row">
+          <span class="info-label">משך הפרק</span>
+          <span class="info-value">1:14:20</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">אורח</span>
+          <span class="info-value">רוני סגל</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">תאריך הקלטה</span>
+          <span class="info-value">10.05.2026</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Bunny Video ID</span>
+          <span class="info-value" style="font-size: 11px;">abc-123-xyz</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">תאריך פקיעת לינק</span>
+          <span class="info-value">10.06.2026</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">סבב נוכחי</span>
+          <span class="info-value">1 מתוך 3</span>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+</div>
+
+</body>
+</html>
