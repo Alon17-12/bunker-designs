@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" data-theme="light">
+<html lang="he" dir="rtl" data-theme="light" data-view="status">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -340,11 +340,44 @@ input { font-family: inherit; }
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 .board-title {
   font-size: 18px; font-weight: 800;
   color: var(--text-main);
 }
+.board-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.view-toggle {
+  display: flex; gap: 4px;
+  background: var(--surface);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.view-toggle button {
+  background: transparent; border: none;
+  color: var(--text-sub);
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 7px;
+  font-weight: 700;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+}
+.view-toggle button.active {
+  background: var(--text-main);
+  color: var(--surface);
+}
+.view-toggle button:not(.active):hover { color: var(--text-main); background: var(--surface-soft); }
 .board-filter {
   display: flex; gap: 4px;
   background: var(--surface);
@@ -364,6 +397,137 @@ input { font-family: inherit; }
 }
 .board-filter button.active { background: var(--red); color: #fff; }
 .board-filter button:not(.active):hover { color: var(--text-main); background: var(--surface-soft); }
+
+/* === DEADLINE VIEW === */
+.deadline-view {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.deadline-view-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-soft);
+}
+.deadline-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  flex: 1;
+}
+.deadline-header-meta {
+  font-size: 11px;
+  color: var(--text-sub);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.deadline-list { display: flex; flex-direction: column; }
+.deadline-row {
+  display: grid;
+  grid-template-columns: 110px auto 1fr auto auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.deadline-row:last-child { border-bottom: none; }
+.deadline-row:hover { background: var(--surface-hover); }
+.deadline-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+}
+.deadline-badge-day {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.deadline-badge-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+.deadline-row.overdue .deadline-badge {
+  background: var(--red);
+  color: #fff;
+  animation: pulse 2s ease-in-out infinite;
+}
+.deadline-row.today .deadline-badge {
+  background: var(--red-glow);
+  color: var(--red);
+  border: 1px solid rgba(211, 32, 32, 0.3);
+}
+.deadline-row.tomorrow .deadline-badge {
+  background: var(--yellow-glow);
+  color: var(--yellow);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+.deadline-row.this-week .deadline-badge {
+  background: var(--blue-glow);
+  color: var(--blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.deadline-row.later .deadline-badge {
+  background: var(--surface-soft);
+  color: var(--text-sub);
+  border: 1px solid var(--border);
+}
+.deadline-status-pill {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+}
+.deadline-status-pill.recorded {
+  background: var(--gray-glow); color: var(--gray);
+  border: 1px solid rgba(107, 114, 128, 0.25);
+}
+.deadline-status-pill.reviewing {
+  background: var(--yellow-glow); color: var(--yellow);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+}
+.deadline-status-pill.revisions {
+  background: var(--blue-glow); color: var(--blue);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+.deadline-status-pill.sent {
+  background: var(--red-glow); color: var(--red);
+  border: 1px solid rgba(211, 32, 32, 0.25);
+}
+.deadline-action-text {
+  font-size: 11px;
+  color: var(--text-sub);
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* === VIEW VISIBILITY === */
+.view-status, .view-deadline { display: none; }
+:root[data-view="status"] .view-status { display: flex; flex-direction: column; gap: 16px; }
+:root[data-view="deadline"] .view-deadline { display: block; }
 
 /* === VERTICAL TIMELINE BOARD === */
 .timeline-board {
@@ -698,25 +862,167 @@ input { font-family: inherit; }
 
     <!-- BOARD HEADER -->
     <div class="board-header">
-      <div class="board-title">📊 פרקים פעילים — לפי סטטוס</div>
-      <div class="board-filter">
-        <button class="active">הכל</button>
-        <button>השבוע</button>
-        <button>שלי</button>
-        <button>דחופים</button>
+      <div class="board-title">📊 פרקים פעילים</div>
+      <div class="board-controls">
+        <div class="view-toggle">
+          <button class="active" onclick="setView('status', this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            סדר פעולה
+          </button>
+          <button onclick="setView('deadline', this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            דד ליין
+          </button>
+        </div>
+        <div class="board-filter">
+          <button class="active">הכל</button>
+          <button>השבוע</button>
+          <button>שלי</button>
+          <button>דחופים</button>
+        </div>
       </div>
     </div>
 
-    <!-- VERTICAL TIMELINE BOARD -->
-    <div class="timeline-board">
+    <!-- ═══════ VIEW: BY STATUS (workflow order) ═══════ -->
+    <div class="view-status timeline-board">
 
-      <!-- Section: Revisions (urgent first) -->
+      <!-- 1. צולם -->
+      <section class="tl-section">
+        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="tl-status-dot recorded"></div>
+          <div class="tl-section-title">1. צולם</div>
+          <span class="tl-section-count">3</span>
+          <div class="tl-section-meta">ממתין לעריכה ראשונית</div>
+          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </header>
+        <div class="tl-list">
+          <div class="tl-item">
+            <div class="tl-item-avatar">DK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">דניאל כהן</div>
+              <div class="tl-item-title">פרק 26 — בינה מלאכותית והעתיד של העבודה</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:08:30</span>
+              <span class="tl-item-meta-item">📅 12.05</span>
+            </div>
+            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">שירה לוי</div>
+              <div class="tl-item-title">פרק 19 — להתחיל מאפס בגיל 40</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 0:52:14</span>
+              <span class="tl-item-meta-item">📅 13.05</span>
+            </div>
+            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">עמית מורן</div>
+              <div class="tl-item-title">פרק 32 — האנשים שפגשתי בלוס אנג'לס</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:23:48</span>
+              <span class="tl-item-meta-item">📅 היום</span>
+            </div>
+            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. נשלח ללקוח 1 -->
+      <section class="tl-section">
+        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="tl-status-dot sent"></div>
+          <div class="tl-section-title">2. נשלח ללקוח 1</div>
+          <span class="tl-section-count">5</span>
+          <div class="tl-section-meta">ממתין לתגובת לקוח · ממוצע: 2.3 ימים</div>
+          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </header>
+        <div class="tl-list">
+          <div class="tl-item">
+            <div class="tl-item-avatar">DK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">דניאל כהן</div>
+              <div class="tl-item-title">פרק 25 — איך לבחור Co-founder</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:02:18</span>
+              <span class="tl-item-meta-item">📅 נשלח 12.05</span>
+            </div>
+            <span class="tl-item-version">V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">רן מילר</div>
+              <div class="tl-item-title">פרק 8 — להפסיק לפחד מכישלון</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 0:48:23</span>
+              <span class="tl-item-meta-item">📅 נשלח 11.05</span>
+            </div>
+            <span class="tl-item-version">V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">NK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">נועה כץ</div>
+              <div class="tl-item-title">פרק 14 — בנייה אישית במאה ה-21</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 0:58:45</span>
+              <span class="tl-item-meta-item">📅 נשלח 09.05 · 5 ימים</span>
+            </div>
+            <span class="tl-item-version">V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">TB</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">תום בן-דוד</div>
+              <div class="tl-item-title">פרק 5 — מהמטבח לעולם</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:11:30</span>
+              <span class="tl-item-meta-item">📅 נשלח 08.05 · 6 ימים</span>
+            </div>
+            <span class="tl-item-version">V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">עמית מורן</div>
+              <div class="tl-item-title">פרק 31 — שיחה עם אבא</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:32:08</span>
+              <span class="tl-item-meta-item">📅 נשלח 11.05</span>
+            </div>
+            <span class="tl-item-version">V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. התקבלו תיקונים מהלקוח (V1 revisions) -->
       <section class="tl-section">
         <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
           <div class="tl-status-dot revisions"></div>
-          <div class="tl-section-title">תיקונים מהלקוח</div>
-          <span class="tl-section-count urgent">3</span>
-          <div class="tl-section-meta">דחוף — לעבד היום</div>
+          <div class="tl-section-title">3. התקבלו תיקונים מהלקוח</div>
+          <span class="tl-section-count urgent">2</span>
+          <div class="tl-section-meta">🔥 לעבד היום</div>
           <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </header>
         <div class="tl-list">
@@ -735,10 +1041,86 @@ input { font-family: inherit; }
               <span class="tl-item-meta-item">📅 היום 09:32</span>
             </div>
             <span class="tl-item-version">V1</span>
-            <button class="tl-item-action" title="פתח פרק">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
           </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">יואב פרץ</div>
+              <div class="tl-item-title">פרק 12 — לחזק את הסיום</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">💬 4 הערות</span>
+              <span class="tl-item-meta-item">📅 13.05</span>
+            </div>
+            <span class="tl-item-version">V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. נשלח ללקוח 2 -->
+      <section class="tl-section">
+        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="tl-status-dot sent"></div>
+          <div class="tl-section-title">4. נשלח ללקוח 2</div>
+          <span class="tl-section-count">3</span>
+          <div class="tl-section-meta">סבב שני · ממתין לאישור</div>
+          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </header>
+        <div class="tl-list">
+          <div class="tl-item">
+            <div class="tl-item-avatar">DK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">דניאל כהן</div>
+              <div class="tl-item-title">פרק 23 — מה זה Product Market Fit באמת</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:14:20</span>
+              <span class="tl-item-meta-item">📅 נשלח 10.05</span>
+            </div>
+            <span class="tl-item-version">V2</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">שירה לוי</div>
+              <div class="tl-item-title">פרק 17 — לא נשבר</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 0:54:50</span>
+              <span class="tl-item-meta-item">📅 נשלח 09.05</span>
+            </div>
+            <span class="tl-item-version">V2</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">רן מילר</div>
+              <div class="tl-item-title">פרק 7 — איך לעבור גירושים</div>
+            </div>
+            <div class="tl-item-meta">
+              <span class="tl-item-meta-item">⏱ 1:18:42</span>
+              <span class="tl-item-meta-item">📅 נשלח 07.05 · 7 ימים!</span>
+            </div>
+            <span class="tl-item-version">V2</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. התקבלו תיקונים מהלקוח 2 -->
+      <section class="tl-section">
+        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="tl-status-dot revisions"></div>
+          <div class="tl-section-title">5. התקבלו תיקונים מהלקוח 2</div>
+          <span class="tl-section-count urgent">1</span>
+          <div class="tl-section-meta">⚠️ סבב אחרון לפני סופי</div>
+          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </header>
+        <div class="tl-list">
           <div class="tl-item new">
             <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
             <div class="tl-item-content">
@@ -753,239 +1135,44 @@ input { font-family: inherit; }
               <span class="tl-item-meta-item">📅 היום 08:15</span>
             </div>
             <span class="tl-item-version">V2</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
           </div>
+        </div>
+      </section>
+
+      <!-- 6. נשלח ללקוח 3 (final) -->
+      <section class="tl-section">
+        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="tl-status-dot sent"></div>
+          <div class="tl-section-title">6. נשלח ללקוח 3 — סופי</div>
+          <span class="tl-section-count">1</span>
+          <div class="tl-section-meta">סבב אחרון — אם לא יאשר ב-3 ימים, יוכרע אוטומטית</div>
+          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </header>
+        <div class="tl-list">
           <div class="tl-item">
             <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
             <div class="tl-item-content">
               <div class="tl-item-customer">יואב פרץ</div>
-              <div class="tl-item-title">פרק 12 — לחזק את הסיום</div>
+              <div class="tl-item-title">פרק 11 — אבא לראשונה</div>
             </div>
             <div class="tl-item-meta">
-              <span class="tl-item-meta-item">💬 4 הערות</span>
-              <span class="tl-item-meta-item">📅 13.05</span>
+              <span class="tl-item-meta-item">⏱ 1:24:10</span>
+              <span class="tl-item-meta-item">📅 נשלח 13.05</span>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
+            <span class="tl-item-version">V3</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
           </div>
         </div>
       </section>
 
-      <!-- Section: Sent to Clients -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot sent"></div>
-          <div class="tl-section-title">אצל לקוחות</div>
-          <span class="tl-section-count">9</span>
-          <div class="tl-section-meta">ממוצע זמן תגובה: 2.3 ימים</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">דניאל כהן</div>
-              <div class="tl-item-title">פרק 23 — מה זה Product Market Fit באמת</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:14:20</span>
-              <span class="tl-item-meta-item">📅 נשלח 10.05</span>
-            </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">שירה לוי</div>
-              <div class="tl-item-title">פרק 17 — לא נשבר</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:54:50</span>
-              <span class="tl-item-meta-item">📅 נשלח 09.05</span>
-            </div>
-            <span class="tl-item-version">V2</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">עמית מורן</div>
-              <div class="tl-item-title">פרק 31 — שיחה עם אבא</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:32:08</span>
-              <span class="tl-item-meta-item">📅 נשלח 11.05</span>
-            </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">רן מילר</div>
-              <div class="tl-item-title">פרק 7 — איך לעבור גירושים</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:18:42</span>
-              <span class="tl-item-meta-item">📅 נשלח 07.05</span>
-            </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section: Reviewing -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot reviewing"></div>
-          <div class="tl-section-title">בסקירה פנימית</div>
-          <span class="tl-section-count">4</span>
-          <div class="tl-section-meta">דדליין: עד יום ראשון</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">דניאל כהן</div>
-              <div class="tl-item-title">פרק 25 — איך לבחור Co-founder</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:02:18</span>
-              <span class="tl-item-meta-item">📅 הוקלט 11.05</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--yellow-glow); color: var(--yellow); border-color: rgba(234, 179, 8, 0.3);">70%</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">רן מילר</div>
-              <div class="tl-item-title">פרק 8 — להפסיק לפחד מכישלון</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:48:23</span>
-              <span class="tl-item-meta-item">📅 הוקלט 10.05</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--yellow-glow); color: var(--yellow); border-color: rgba(234, 179, 8, 0.3);">30%</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">NK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">נועה כץ</div>
-              <div class="tl-item-title">פרק 14 — בנייה אישית במאה ה-21</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:58:45</span>
-              <span class="tl-item-meta-item">📅 הוקלט 09.05</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--yellow-glow); color: var(--yellow); border-color: rgba(234, 179, 8, 0.3);">חדש</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">TB</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">תום בן-דוד</div>
-              <div class="tl-item-title">פרק 5 — מהמטבח לעולם</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:11:30</span>
-              <span class="tl-item-meta-item">📅 הוקלט 08.05</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--yellow-glow); color: var(--yellow); border-color: rgba(234, 179, 8, 0.3);">חדש</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section: Recorded (collapsed by default) -->
-      <section class="tl-section collapsed">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot recorded"></div>
-          <div class="tl-section-title">הוקלט — ממתין לסקירה</div>
-          <span class="tl-section-count">3</span>
-          <div class="tl-section-meta">לסיים סקירה לפני שליחה ללקוח</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">דניאל כהן</div>
-              <div class="tl-item-title">פרק 26 — בינה מלאכותית והעתיד של העבודה</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:08:30</span>
-              <span class="tl-item-meta-item">📅 12.05</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">שירה לוי</div>
-              <div class="tl-item-title">פרק 19 — להתחיל מאפס בגיל 40</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:52:14</span>
-              <span class="tl-item-meta-item">📅 13.05</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">עמית מורן</div>
-              <div class="tl-item-title">פרק 32 — האנשים שפגשתי בלוס אנג'לס</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:23:48</span>
-              <span class="tl-item-meta-item">📅 היום</span>
-            </div>
-            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
-            <button class="tl-item-action">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section: Approved (collapsed) -->
+      <!-- 7. הסתיים -->
       <section class="tl-section collapsed">
         <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
           <div class="tl-status-dot approved"></div>
-          <div class="tl-section-title">אושרו החודש</div>
+          <div class="tl-section-title">7. הסתיים</div>
           <span class="tl-section-count">18</span>
-          <div class="tl-section-meta">↑ 28% לעומת חודש שעבר</div>
+          <div class="tl-section-meta">↑ 28% לעומת חודש שעבר · החודש בלבד</div>
           <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </header>
         <div class="tl-list">
@@ -993,6 +1180,173 @@ input { font-family: inherit; }
         </div>
       </section>
 
+    </div>
+
+    <!-- ═══════ VIEW: BY DEADLINE ═══════ -->
+    <div class="view-deadline">
+      <div class="deadline-view">
+        <div class="deadline-view-header">
+          <div class="deadline-header-title">⏰ פרקים לפי דחיפות — מה צריך לקרות הכי קרוב</div>
+          <div class="deadline-header-meta">15 פרקים פעילים</div>
+        </div>
+        <div class="deadline-list">
+
+          <!-- TODAY / OVERDUE -->
+          <div class="deadline-row overdue">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">!</div>
+              <div class="deadline-badge-label">היום</div>
+            </div>
+            <div class="tl-item-avatar">DK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">דניאל כהן</div>
+              <div class="tl-item-title">פרק 24 — איך בונים סטארטאפ ב-2026</div>
+            </div>
+            <span class="deadline-action-text">לעבד 5 רילס + תיקונים</span>
+            <span class="deadline-status-pill revisions">תיקונים V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <div class="deadline-row overdue">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">!</div>
+              <div class="deadline-badge-label">היום</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">שירה לוי</div>
+              <div class="tl-item-title">פרק 18 — הקאמבק שלי</div>
+            </div>
+            <span class="deadline-action-text">סבב אחרון לפני סופי</span>
+            <span class="deadline-status-pill revisions">תיקונים V2</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <!-- TOMORROW -->
+          <div class="deadline-row tomorrow">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+1</div>
+              <div class="deadline-badge-label">מחר</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">יואב פרץ</div>
+              <div class="tl-item-title">פרק 12 — לחזק את הסיום</div>
+            </div>
+            <span class="deadline-action-text">לעבד 4 הערות</span>
+            <span class="deadline-status-pill revisions">תיקונים V1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <div class="deadline-row tomorrow">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+1</div>
+              <div class="deadline-badge-label">מחר</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">רן מילר</div>
+              <div class="tl-item-title">פרק 7 — איך לעבור גירושים</div>
+            </div>
+            <span class="deadline-action-text">7 ימים ללא תגובה — תזכורת</span>
+            <span class="deadline-status-pill sent">נשלח 2</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <!-- THIS WEEK (+2 to +5) -->
+          <div class="deadline-row this-week">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+2</div>
+              <div class="deadline-badge-label">ימים</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">TB</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">תום בן-דוד</div>
+              <div class="tl-item-title">פרק 5 — מהמטבח לעולם</div>
+            </div>
+            <span class="deadline-action-text">6 ימים אצל לקוח — תזכורת</span>
+            <span class="deadline-status-pill sent">נשלח 1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <div class="deadline-row this-week">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+2</div>
+              <div class="deadline-badge-label">ימים</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">NK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">נועה כץ</div>
+              <div class="tl-item-title">פרק 14 — בנייה אישית במאה ה-21</div>
+            </div>
+            <span class="deadline-action-text">5 ימים אצל לקוח</span>
+            <span class="deadline-status-pill sent">נשלח 1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <div class="deadline-row this-week">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+3</div>
+              <div class="deadline-badge-label">ימים</div>
+            </div>
+            <div class="tl-item-avatar">DK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">דניאל כהן</div>
+              <div class="tl-item-title">פרק 26 — בינה מלאכותית והעתיד של העבודה</div>
+            </div>
+            <span class="deadline-action-text">לסיים סקירה ולשלוח</span>
+            <span class="deadline-status-pill recorded">צולם</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <div class="deadline-row this-week">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+4</div>
+              <div class="deadline-badge-label">ימים</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">שירה לוי</div>
+              <div class="tl-item-title">פרק 19 — להתחיל מאפס בגיל 40</div>
+            </div>
+            <span class="deadline-action-text">לסיים סקירה ולשלוח</span>
+            <span class="deadline-status-pill recorded">צולם</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <!-- LATER (+5+) -->
+          <div class="deadline-row later">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+5</div>
+              <div class="deadline-badge-label">ימים</div>
+            </div>
+            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">עמית מורן</div>
+              <div class="tl-item-title">פרק 31 — שיחה עם אבא</div>
+            </div>
+            <span class="deadline-action-text">3 ימים אצל לקוח</span>
+            <span class="deadline-status-pill sent">נשלח 1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+          <div class="deadline-row later">
+            <div class="deadline-badge">
+              <div class="deadline-badge-day">+6</div>
+              <div class="deadline-badge-label">ימים</div>
+            </div>
+            <div class="tl-item-avatar">DK</div>
+            <div class="tl-item-content">
+              <div class="tl-item-customer">דניאל כהן</div>
+              <div class="tl-item-title">פרק 25 — איך לבחור Co-founder</div>
+            </div>
+            <span class="deadline-action-text">ממתין לתגובת לקוח</span>
+            <span class="deadline-status-pill sent">נשלח 1</span>
+            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </main>
@@ -1007,10 +1361,26 @@ function toggleTheme() {
   root.setAttribute('data-theme', next);
   try { localStorage.setItem('bunker-theme', next); } catch(e) {}
 }
-// Load saved theme
 try {
   const saved = localStorage.getItem('bunker-theme');
   if (saved) document.documentElement.setAttribute('data-theme', saved);
+} catch(e) {}
+
+// View toggle (status / deadline)
+function setView(view, btn) {
+  document.documentElement.setAttribute('data-view', view);
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  try { localStorage.setItem('bunker-view', view); } catch(e) {}
+}
+try {
+  const savedView = localStorage.getItem('bunker-view');
+  if (savedView) {
+    document.documentElement.setAttribute('data-view', savedView);
+    document.querySelectorAll('.view-toggle button').forEach((b, i) => {
+      b.classList.toggle('active', (i === 0 && savedView === 'status') || (i === 1 && savedView === 'deadline'));
+    });
+  }
 } catch(e) {}
 </script>
 

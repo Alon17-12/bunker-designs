@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>פורטל לקוח | הבונקר</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* === DARK MODE (default) === */
 :root {
   --black: #0a0a0a;
   --black-soft: #111111;
@@ -24,7 +25,98 @@
   --yellow: #eab308;
   --border: rgba(255,255,255,0.08);
   --border-strong: rgba(255,255,255,0.15);
+  --text-main: var(--white);
+  --text-sub: var(--gray-400);
+  --bg-input: var(--black);
 }
+
+/* === LIGHT MODE === */
+:root[data-theme="light"] {
+  --black: #ffffff;          /* main bg */
+  --black-soft: #f7f7f8;     /* sidebar, surfaces */
+  --black-medium: #f0f0f0;   /* hover surface */
+  --black-light: #ebebec;    /* card bg */
+  --gray-700: #d4d4d4;       /* darker border */
+  --gray-500: #909090;
+  --gray-400: #585858;       /* sub-text */
+  --gray-200: #242424;       /* near-black */
+  --white: #0a0a0a;          /* text */
+  --red-glow: rgba(211, 32, 32, 0.08);
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.14);
+  --text-main: #0a0a0a;
+  --text-sub: #585858;
+  --bg-input: #ffffff;
+}
+
+/* === LIGHT MODE EXCEPTIONS (areas that stay dark) === */
+:root[data-theme="light"] body {
+  background: #f7f7f8;
+  background-image: none;
+}
+:root[data-theme="light"] .header {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+:root[data-theme="light"] .player-container { border-color: rgba(0,0,0,0.15); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+/* Player controls always white text on dark gradient */
+:root[data-theme="light"] .player-controls .progress-row,
+:root[data-theme="light"] .player-controls .progress-row span {
+  color: #d4d4d4;
+}
+:root[data-theme="light"] .player-controls .control-btn { color: #ffffff; }
+:root[data-theme="light"] .player-controls .control-btn:hover { background: rgba(255,255,255,0.15); }
+:root[data-theme="light"] .player-controls .speed-btn { color: #ffffff; border-color: rgba(255,255,255,0.2); }
+/* Cards in light mode - use white surface with soft shadows */
+:root[data-theme="light"] .timeline-section,
+:root[data-theme="light"] .general-notes,
+:root[data-theme="light"] .sidebar,
+:root[data-theme="light"] .reel-item,
+:root[data-theme="light"] .comment-item,
+:root[data-theme="light"] .modal {
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+:root[data-theme="light"] .timeline-track,
+:root[data-theme="light"] .notes-input,
+:root[data-theme="light"] .stepper-btn:hover,
+:root[data-theme="light"] .upsell-stepper {
+  background: #f7f7f8;
+  border-color: rgba(0,0,0,0.1);
+}
+/* Reel item / comment item override - they use var(--black) which would be white */
+:root[data-theme="light"] .reel-item:hover,
+:root[data-theme="light"] .comment-item:hover {
+  background: #f7f7f8;
+}
+:root[data-theme="light"] .reel-action-btn { color: #585858; }
+:root[data-theme="light"] .reel-action-btn:hover { background: #f0f0f0; color: #0a0a0a; }
+/* Add-reel button in light */
+:root[data-theme="light"] .add-reel-btn { color: #585858; border-color: rgba(0,0,0,0.15); }
+:root[data-theme="light"] .add-reel-btn:hover { color: var(--red-light); }
+/* Wave bars darker in light */
+:root[data-theme="light"] .wave-bar { background: rgba(0,0,0,0.18); }
+:root[data-theme="light"] .wave-bar.played { background: var(--red); opacity: 0.7; }
+/* Modal backdrop */
+:root[data-theme="light"] .modal-backdrop { background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); }
+:root[data-theme="light"] .modal-close { background: #f0f0f0; color: #585858; border-color: rgba(0,0,0,0.08); }
+:root[data-theme="light"] .shortcut-keys kbd { background: #f7f7f8; color: #0a0a0a; border-color: rgba(0,0,0,0.15); }
+/* Upsell card in light mode */
+:root[data-theme="light"] .upsell-card::before { background: #ffffff; }
+:root[data-theme="light"] .upsell-card { background: linear-gradient(135deg, rgba(211, 32, 32, 0.05), rgba(211, 32, 32, 0.01)); }
+:root[data-theme="light"] .upsell-desc { color: #404040; }
+:root[data-theme="light"] .upsell-desc strong { color: #0a0a0a; }
+:root[data-theme="light"] .upsell-price { color: #0a0a0a; }
+:root[data-theme="light"] .upsell-total { color: #0a0a0a; }
+:root[data-theme="light"] .stepper-btn { color: #0a0a0a; }
+:root[data-theme="light"] .stepper-val { color: #0a0a0a; }
+/* Episode meta text in light */
+:root[data-theme="light"] .episode-instructions strong { color: #0a0a0a; }
+:root[data-theme="light"] .comment-text { color: #404040; }
+/* Submit bar summary */
+:root[data-theme="light"] .summary-stat strong { color: #0a0a0a; }
+:root[data-theme="light"] .empty-state { background: #f7f7f8; color: #585858; }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: 'Heebo', sans-serif;
@@ -101,6 +193,10 @@ input, textarea { font-family: inherit; }
   margin-right: 16px;
 }
 .help-btn:hover { background: var(--black-medium); color: var(--white); }
+.help-btn .icon-sun { display: block; }
+.help-btn .icon-moon { display: none; }
+:root[data-theme="light"] .help-btn .icon-sun { display: none; }
+:root[data-theme="light"] .help-btn .icon-moon { display: block; }
 
 /* === MAIN LAYOUT === */
 .layout {
@@ -913,12 +1009,16 @@ input, textarea { font-family: inherit; }
     <div class="brand-logo">הבונקר</div>
     <div class="brand-subtitle">CLIENT PORTAL</div>
   </div>
-  <div style="display: flex; align-items: center;">
+  <div style="display: flex; align-items: center; gap: 10px;">
     <div class="user-greeting">
       <span class="label">שלום,</span>
       <strong>דניאל כהן</strong>
     </div>
-    <button class="help-btn" onclick="document.querySelector('.modal-backdrop').classList.add('open')" title="קיצורי מקלדת">
+    <button class="help-btn" onclick="toggleTheme()" title="החלף ערכת נושא">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="help-btn" onclick="document.querySelector('.modal-backdrop').classList.add('open')" title="קיצורי מקלדת" style="margin-right: 0;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     </button>
   </div>
@@ -1203,6 +1303,19 @@ input, textarea { font-family: inherit; }
 </div>
 
 <script>
+// Theme toggle
+function toggleTheme() {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('bunker-theme', next); } catch(e) {}
+}
+try {
+  const saved = localStorage.getItem('bunker-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+} catch(e) {}
+
 // Generate waveform bars
 const waveform = document.getElementById('waveform');
 const heights = [];
