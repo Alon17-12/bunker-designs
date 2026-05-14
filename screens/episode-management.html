@@ -158,6 +158,127 @@ button { font-family: inherit; cursor: pointer; }
 }
 .breadcrumb .current { color: var(--text-main); font-weight: 600; }
 
+/* === MONDAY-STYLE STATUS PILL === */
+.mb-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+}
+.mb-status-pill.revisions { background: #3b82f6; }
+.mb-status-pill.revisions::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: #fff; margin-left: 6px;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* === OWNERS ROW === */
+.episode-owners {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+}
+.owners-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  padding-left: 4px;
+}
+.owners-stack {
+  display: flex;
+  align-items: center;
+}
+.owner-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 5px 10px 5px 5px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: 6px;
+}
+.owner-pill:hover { border-color: var(--border-strong); background: var(--surface-hover); }
+.owner-pill-avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 10px; color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+.owner-pill-avatar.admin { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
+.owner-pill-avatar.editor { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+.owner-pill-avatar.designer { background: linear-gradient(135deg, #10b981, #059669); }
+.owner-pill-role {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.owner-add {
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-right: auto;
+}
+.owner-add:hover { color: var(--red); border-color: var(--red); }
+
+/* Quick stats inline */
+.episode-quickstats {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+.quickstat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.quickstat-icon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+.quickstat-icon.blue { background: var(--blue-glow); color: var(--blue); }
+.quickstat-icon.red { background: var(--red-glow); color: var(--red); }
+.quickstat-icon.yellow { background: var(--yellow-glow); color: var(--yellow); }
+.quickstat-icon.green { background: var(--green-glow); color: var(--green); }
+.quickstat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.quickstat-value { font-weight: 800; font-family: 'Inter', sans-serif; }
+
 /* === EPISODE HEADER === */
 .episode-header {
   margin-bottom: 24px;
@@ -819,18 +940,83 @@ button { font-family: inherit; cursor: pointer; }
         </button>
       </div>
 
-      <!-- Episode Header -->
+      <!-- Episode Header (Monday-inspired) -->
       <div class="episode-header">
         <div class="episode-meta-row">
           <div class="customer-pill">
             <div class="customer-avatar">DK</div>
             <span>דניאל כהן</span>
           </div>
-          <span class="status-pill revisions">תיקונים מהלקוח</span>
-          <span class="version-badge">⚡ V1</span>
+          <span class="mb-status-pill revisions">תיקונים מהלקוח · V1</span>
         </div>
         <h1 class="episode-title">איך בונים סטארטאפ ב-2026 — שיחה עם רוני סגל</h1>
         <p class="episode-tagline">פרק 24 · הוקלט 10.05.2026 · נשלח ללקוח 11.05 · נענה 14.05 09:32</p>
+
+        <!-- Quick stats inline -->
+        <div class="episode-quickstats">
+          <div class="quickstat">
+            <div class="quickstat-icon red">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+            </div>
+            <div>
+              <div class="quickstat-label">רילסים</div>
+              <div class="quickstat-value">5 ממתינים</div>
+            </div>
+          </div>
+          <div class="quickstat">
+            <div class="quickstat-icon blue">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <div class="quickstat-label">תיקונים</div>
+              <div class="quickstat-value">4 הערות</div>
+            </div>
+          </div>
+          <div class="quickstat">
+            <div class="quickstat-icon yellow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="quickstat-label">דדליין</div>
+              <div class="quickstat-value">היום</div>
+            </div>
+          </div>
+          <div class="quickstat">
+            <div class="quickstat-icon green">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <div class="quickstat-label">סבב</div>
+              <div class="quickstat-value">1 מתוך 3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Owners row (Monday-style) -->
+        <div class="episode-owners">
+          <span class="owners-label">צוות:</span>
+          <div class="owners-stack">
+            <div class="owner-pill">
+              <div class="owner-pill-avatar admin">AG</div>
+              <span>אלון גבאי</span>
+              <span class="owner-pill-role">· אדמין</span>
+            </div>
+            <div class="owner-pill">
+              <div class="owner-pill-avatar editor">EO</div>
+              <span>עומר</span>
+              <span class="owner-pill-role">· עורך</span>
+            </div>
+            <div class="owner-pill">
+              <div class="owner-pill-avatar designer">DZ</div>
+              <span>דנה</span>
+              <span class="owner-pill-role">· מעצבת</span>
+            </div>
+          </div>
+          <button class="owner-add" title="הוסף חבר צוות">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+
         <div class="episode-actions">
           <button class="btn btn-primary">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>

@@ -529,6 +529,704 @@ input { font-family: inherit; }
 :root[data-view="status"] .view-status { display: flex; flex-direction: column; gap: 16px; }
 :root[data-view="deadline"] .view-deadline { display: block; }
 
+/* ═══════════════════════════════════════════════════
+   MONDAY.COM STYLE ENHANCEMENTS
+   ═══════════════════════════════════════════════════ */
+
+/* === MAIN LAYOUT - 3 COLUMN === */
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 1280px) {
+  .workspace { grid-template-columns: 1fr; }
+  .activity-feed { display: none; }
+}
+
+/* === VIEW TABS (Monday-style) === */
+.view-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+.view-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-sub);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.view-tab:hover { color: var(--text-main); background: var(--surface-soft); }
+.view-tab.active {
+  background: var(--surface-soft);
+  color: var(--text-main);
+  font-weight: 700;
+}
+.view-tab.active::after {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 2px;
+}
+.view-tab-count {
+  background: var(--surface-soft);
+  color: var(--text-muted);
+  padding: 1px 7px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+.view-tab.active .view-tab-count {
+  background: var(--red);
+  color: #fff;
+}
+.view-tab-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.view-tab-add {
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.view-tab-add:hover { color: var(--red); border-color: var(--red); }
+
+/* === TOOLBAR ROW (filters + search) === */
+.workspace-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+}
+.toolbar-search {
+  flex: 0 0 240px;
+  position: relative;
+}
+.toolbar-search input {
+  width: 100%;
+  background: var(--surface-soft);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 14px 8px 38px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-main);
+  outline: none;
+}
+.toolbar-search input:focus { border-color: var(--red); background: var(--surface); }
+.toolbar-search-icon {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.toolbar-search-kbd {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.filter-chip:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+.filter-chip.active {
+  background: var(--red-glow);
+  border-color: rgba(211, 32, 32, 0.3);
+  color: var(--red);
+}
+.filter-chip .chip-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+}
+.filter-chip-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 2px;
+}
+.toolbar-spacer { flex: 1; }
+.toolbar-icon-btn {
+  background: var(--surface-soft);
+  border: 1px solid transparent;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-sub);
+  transition: all 0.15s;
+}
+.toolbar-icon-btn:hover { background: var(--surface); border-color: var(--border); color: var(--text-main); }
+
+/* ═══ MONDAY-STYLE TABLE ═══ */
+.mb-board {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.mb-group {
+  border-bottom: 1px solid var(--border);
+}
+.mb-group:last-child { border-bottom: none; }
+
+/* Group header with colored left stripe */
+.mb-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  background: var(--surface);
+  transition: background 0.15s;
+}
+.mb-group-header:hover { background: var(--surface-hover); }
+.mb-group-stripe {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 2px 0 0 2px;
+}
+.mb-group-stripe.recorded { background: #6b7280; }
+.mb-group-stripe.sent-v1, .mb-group-stripe.sent-v2 { background: #fbbf24; }
+.mb-group-stripe.sent-v3 { background: #f97316; }
+.mb-group-stripe.revisions { background: #3b82f6; }
+.mb-group-stripe.revisions-2 { background: #a855f7; }
+.mb-group-stripe.approved { background: #16a34a; }
+.mb-group-chevron {
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.mb-group.collapsed .mb-group-chevron { transform: rotate(-90deg); }
+.mb-group.collapsed .mb-group-body { display: none; }
+.mb-group-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.mb-group-count {
+  background: var(--surface-soft);
+  color: var(--text-sub);
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+.mb-group-count.urgent {
+  background: #ef4444;
+  color: #fff;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+.mb-group-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  margin-right: auto;
+}
+.mb-group-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.mb-group-header:hover .mb-group-actions { opacity: 1; }
+.mb-action-icon {
+  background: transparent;
+  border: none;
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.mb-action-icon:hover { background: var(--surface-soft); color: var(--text-main); }
+
+/* Column headers row */
+.mb-columns {
+  display: grid;
+  grid-template-columns: 1fr 110px 130px 110px 60px 60px 30px;
+  gap: 8px;
+  padding: 8px 18px 8px 18px;
+  background: var(--surface-soft);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Pulse row */
+.mb-pulse {
+  display: grid;
+  grid-template-columns: 1fr 110px 130px 110px 60px 60px 30px;
+  gap: 8px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 0.15s;
+  cursor: pointer;
+  position: relative;
+}
+.mb-pulse:last-child { border-bottom: none; }
+.mb-pulse:hover { background: var(--surface-hover); }
+.mb-pulse.new::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: #3b82f6;
+}
+.mb-pulse.urgent::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: #ef4444;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Pulse: title cell */
+.mb-pulse-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.mb-pulse-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 11px; color: #fff;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+}
+.mb-pulse-text { min-width: 0; }
+.mb-pulse-customer {
+  font-size: 10px;
+  color: var(--text-sub);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mb-new-badge {
+  background: #3b82f6;
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+.mb-pulse-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Pulse: owner cell */
+.mb-pulse-owner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mb-owner-stack {
+  display: flex;
+  align-items: center;
+}
+.mb-owner-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 10px; color: #fff;
+  font-family: 'Inter', sans-serif;
+  border: 2px solid var(--surface);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.mb-owner-avatar + .mb-owner-avatar { margin-right: -8px; }
+.mb-owner-avatar.editor { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+.mb-owner-avatar.designer { background: linear-gradient(135deg, #10b981, #059669); }
+.mb-owner-avatar:hover { transform: translateY(-2px); z-index: 1; }
+.mb-owner-empty {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px dashed var(--border-strong);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+}
+
+/* Monday status cell (SOLID COLOR) */
+.mb-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.mb-status:hover { transform: scale(1.03); }
+.mb-status.recorded { background: #6b7280; }
+.mb-status.sent-v1 { background: #fbbf24; color: #422006; }
+.mb-status.sent-v2 { background: #f97316; }
+.mb-status.sent-v3 { background: #ea580c; }
+.mb-status.revisions { background: #3b82f6; }
+.mb-status.revisions-2 { background: #a855f7; }
+.mb-status.approved { background: #16a34a; }
+.mb-status.overdue {
+  background: #ef4444;
+  animation: badgePulse 1.5s ease-in-out infinite;
+}
+
+/* Deadline cell */
+.mb-deadline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  background: var(--surface-soft);
+  color: var(--text-main);
+}
+.mb-deadline.overdue { background: rgba(239, 68, 68, 0.12); color: #dc2626; }
+.mb-deadline.today { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+.mb-deadline.tomorrow { background: rgba(251, 191, 36, 0.15); color: #d97706; }
+.mb-deadline.week { background: rgba(59, 130, 246, 0.12); color: #2563eb; }
+.mb-deadline-icon { font-size: 11px; }
+
+/* Version cell */
+.mb-version {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  background: var(--surface-soft);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+.mb-version.v1 { background: rgba(107, 114, 128, 0.15); color: #4b5563; }
+.mb-version.v2 { background: rgba(251, 191, 36, 0.2); color: #b45309; }
+.mb-version.v3 { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+/* Comments badge */
+.mb-comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text-sub);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+}
+.mb-comments:hover { color: var(--text-main); }
+.mb-comments.has-new { color: var(--red); }
+.mb-comments.has-new::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* Action cell */
+.mb-pulse-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mb-action-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.mb-action-btn:hover { background: var(--surface-soft); color: var(--text-main); border-color: var(--border); }
+
+/* Add row button */
+.mb-add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border-top: 1px dashed transparent;
+  transition: all 0.15s;
+}
+.mb-add-row:hover {
+  color: var(--red);
+  background: var(--surface-hover);
+  border-top-color: var(--border);
+}
+
+/* ═══ ACTIVITY FEED ═══ */
+.activity-feed {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+.feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.feed-title {
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feed-title::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 8px #16a34a;
+  animation: pulse 2s ease-in-out infinite;
+}
+.feed-filter {
+  display: flex;
+  gap: 4px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-soft);
+}
+.feed-filter button {
+  background: transparent;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-sub);
+  cursor: pointer;
+  font-family: inherit;
+}
+.feed-filter button.active {
+  background: var(--surface);
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+.feed-list {
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.feed-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: var(--surface-hover); }
+.feed-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 11px; color: #fff;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+}
+.feed-avatar.client-dk { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
+.feed-avatar.client-sl { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+.feed-avatar.client-am { background: linear-gradient(135deg, #10b981, #059669); }
+.feed-avatar.client-yp { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.feed-avatar.system { background: linear-gradient(135deg, #475569, #1e293b); }
+.feed-content { flex: 1; min-width: 0; }
+.feed-text {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+.feed-text strong { font-weight: 700; }
+.feed-text .feed-action-tag {
+  display: inline-block;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-sub);
+  font-family: 'Inter', sans-serif;
+  margin: 0 2px;
+}
+.feed-time {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.feed-event-icon {
+  position: absolute;
+  bottom: 14px; left: 18px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* ═══ TOAST NOTIFICATION ═══ */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-right: 4px solid #16a34a;
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  z-index: 200;
+  animation: toastIn 0.4s ease-out;
+}
+@keyframes toastIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.toast-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.toast-content { font-size: 13px; }
+.toast-title { font-weight: 700; color: var(--text-main); }
+.toast-text { font-size: 11px; color: var(--text-sub); margin-top: 2px; }
+.toast-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  margin-right: 8px;
+}
+.toast-close:hover { color: var(--text-main); }
+
 /* === VERTICAL TIMELINE BOARD === */
 .timeline-board {
   display: flex; flex-direction: column; gap: 16px;
@@ -783,7 +1481,6 @@ input { font-family: inherit; }
         <div class="page-title">
           Dashboard
           <span class="day-info">· יום חמישי 14.05</span>
-          <span style="background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 4px; letter-spacing: 1px; font-family: 'Inter', sans-serif; vertical-align: middle;">V2 LIGHT</span>
         </div>
         <div class="page-subtitle">28 פרקים פעילים · 11 Reels בתור · 3 תיקונים חדשים</div>
       </div>
@@ -860,327 +1557,566 @@ input { font-family: inherit; }
       </div>
     </div>
 
-    <!-- BOARD HEADER -->
-    <div class="board-header">
-      <div class="board-title">📊 פרקים פעילים</div>
-      <div class="board-controls">
-        <div class="view-toggle">
-          <button class="active" onclick="setView('status', this)">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-            סדר פעולה
-          </button>
-          <button onclick="setView('deadline', this)">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            דד ליין
-          </button>
-        </div>
-        <div class="board-filter">
-          <button class="active">הכל</button>
-          <button>השבוע</button>
-          <button>שלי</button>
-          <button>דחופים</button>
-        </div>
-      </div>
+    <!-- VIEW TABS (Monday-style) -->
+    <div class="view-tabs">
+      <button class="view-tab active" onclick="setView('status', this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        ראשי
+        <span class="view-tab-count">15</span>
+      </button>
+      <button class="view-tab" onclick="setView('deadline', this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        דד ליין
+      </button>
+      <button class="view-tab">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Kanban
+      </button>
+      <button class="view-tab">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        לוח שנה
+      </button>
+      <button class="view-tab">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="9" x2="9" y2="9"/><line x1="3" y1="15" x2="15" y2="15"/><line x1="3" y1="3" x2="13" y2="3"/><line x1="3" y1="21" x2="21" y2="21"/></svg>
+        גנט
+      </button>
+      <div class="view-tab-divider"></div>
+      <button class="view-tab-add" title="הוסף תצוגה">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
     </div>
 
-    <!-- ═══════ VIEW: BY STATUS (workflow order) ═══════ -->
-    <div class="view-status timeline-board">
+    <!-- TOOLBAR ROW (search + filter chips) -->
+    <div class="workspace-toolbar">
+      <div class="toolbar-search">
+        <span class="toolbar-search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="text" placeholder="חפש פרק, לקוח...">
+        <span class="toolbar-search-kbd">/</span>
+      </div>
+      <div class="toolbar-divider"></div>
+      <button class="filter-chip active">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+        השבוע
+        <span class="chip-x">×</span>
+      </button>
+      <button class="filter-chip">
+        <span style="font-size: 13px;">👤</span>
+        אלון
+      </button>
+      <button class="filter-chip">
+        <span style="font-size: 13px;">🔥</span>
+        דחופים
+      </button>
+      <button class="filter-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        סינון
+      </button>
+      <div class="toolbar-spacer"></div>
+      <button class="toolbar-icon-btn" title="מיון">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+      </button>
+      <button class="toolbar-icon-btn" title="הסתרת עמודות">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+      </button>
+      <button class="toolbar-icon-btn" title="קיבוץ">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="7" rx="1"/><rect x="3" y="14" width="18" height="7" rx="1"/></svg>
+      </button>
+    </div>
+
+    <!-- ═══════ WORKSPACE: 3-COLUMN LAYOUT (main + activity feed) ═══════ -->
+    <div class="workspace">
+
+    <div>
+
+    <!-- ═══════ VIEW: BY STATUS (Monday-style) ═══════ -->
+    <div class="view-status mb-board">
 
       <!-- 1. צולם -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot recorded"></div>
-          <div class="tl-section-title">1. צולם</div>
-          <span class="tl-section-count">3</span>
-          <div class="tl-section-meta">ממתין לעריכה ראשונית</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <section class="mb-group">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe recorded"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">1. צולם</div>
+          <span class="mb-group-count">3</span>
+          <div class="mb-group-meta">ממתין לעריכה ראשונית</div>
+          <div class="mb-group-actions">
+            <button class="mb-action-icon" title="הוסף פריט"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button class="mb-action-icon" title="פעולות"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
+          </div>
         </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">דניאל כהן</div>
-              <div class="tl-item-title">פרק 26 — בינה מלאכותית והעתיד של העבודה</div>
+        <div class="mb-columns">
+          <div>פרק</div>
+          <div style="text-align: center;">בעלים</div>
+          <div style="text-align: center;">סטטוס</div>
+          <div style="text-align: center;">דדליין</div>
+          <div style="text-align: center;">גרסה</div>
+          <div style="text-align: center;">💬</div>
+          <div></div>
+        </div>
+        <div class="mb-group-body">
+          <!-- Section 1 items -->
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar">DK</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">דניאל כהן</div>
+                <div class="mb-pulse-title">פרק 26 — בינה מלאכותית והעתיד של העבודה</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:08:30</span>
-              <span class="tl-item-meta-item">📅 12.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar" title="אלון - אדמין">AG</div>
+                <div class="mb-owner-empty" title="הוסף עורך"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              </div>
             </div>
-            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status recorded">צולם</div>
+            <div class="mb-deadline week">🗓 +3 ימים</div>
+            <div class="mb-version">חדש</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">שירה לוי</div>
-              <div class="tl-item-title">פרק 19 — להתחיל מאפס בגיל 40</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">שירה לוי</div>
+                <div class="mb-pulse-title">פרק 19 — להתחיל מאפס בגיל 40</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:52:14</span>
-              <span class="tl-item-meta-item">📅 13.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status recorded">צולם</div>
+            <div class="mb-deadline week">🗓 +4 ימים</div>
+            <div class="mb-version">חדש</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">עמית מורן</div>
-              <div class="tl-item-title">פרק 32 — האנשים שפגשתי בלוס אנג'לס</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">עמית מורן</div>
+                <div class="mb-pulse-title">פרק 32 — האנשים שפגשתי בלוס אנג'לס</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:23:48</span>
-              <span class="tl-item-meta-item">📅 היום</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version" style="background: var(--gray-glow); color: var(--gray); border-color: rgba(107, 114, 128, 0.3);">חדש</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status recorded">צולם</div>
+            <div class="mb-deadline week">🗓 +5 ימים</div>
+            <div class="mb-version">חדש</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
+        </div>
+        <div class="mb-add-row" onclick="this.previousElementSibling.scrollIntoView()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          הוסף פריט
         </div>
       </section>
 
       <!-- 2. נשלח ללקוח 1 -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot sent"></div>
-          <div class="tl-section-title">2. נשלח ללקוח 1</div>
-          <span class="tl-section-count">5</span>
-          <div class="tl-section-meta">ממתין לתגובת לקוח · ממוצע: 2.3 ימים</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <section class="mb-group">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe sent-v1"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">2. נשלח ללקוח 1</div>
+          <span class="mb-group-count">5</span>
+          <div class="mb-group-meta">ממתין לתגובת לקוח · ממוצע: 2.3 ימים</div>
+          <div class="mb-group-actions">
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
+          </div>
         </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">דניאל כהן</div>
-              <div class="tl-item-title">פרק 25 — איך לבחור Co-founder</div>
+        <div class="mb-columns">
+          <div>פרק</div>
+          <div style="text-align: center;">בעלים</div>
+          <div style="text-align: center;">סטטוס</div>
+          <div style="text-align: center;">דדליין</div>
+          <div style="text-align: center;">גרסה</div>
+          <div style="text-align: center;">💬</div>
+          <div></div>
+        </div>
+        <div class="mb-group-body">
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar">DK</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">דניאל כהן</div>
+                <div class="mb-pulse-title">פרק 25 — איך לבחור Co-founder</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:02:18</span>
-              <span class="tl-item-meta-item">📅 נשלח 12.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+                <div class="mb-owner-avatar editor">EO</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v1">נשלח ללקוח 1</div>
+            <div class="mb-deadline later">🗓 +6 ימים</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">רן מילר</div>
-              <div class="tl-item-title">פרק 8 — להפסיק לפחד מכישלון</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">רן מילר</div>
+                <div class="mb-pulse-title">פרק 8 — להפסיק לפחד מכישלון</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:48:23</span>
-              <span class="tl-item-meta-item">📅 נשלח 11.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v1">נשלח ללקוח 1</div>
+            <div class="mb-deadline week">🗓 +3 ימים</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">NK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">נועה כץ</div>
-              <div class="tl-item-title">פרק 14 — בנייה אישית במאה ה-21</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">NK</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">נועה כץ</div>
+                <div class="mb-pulse-title">פרק 14 — בנייה אישית במאה ה-21</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:58:45</span>
-              <span class="tl-item-meta-item">📅 נשלח 09.05 · 5 ימים</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+                <div class="mb-owner-avatar designer">DZ</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v1">נשלח ללקוח 1</div>
+            <div class="mb-deadline tomorrow">⚠️ +1 יום</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">TB</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">תום בן-דוד</div>
-              <div class="tl-item-title">פרק 5 — מהמטבח לעולם</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">TB</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">תום בן-דוד</div>
+                <div class="mb-pulse-title">פרק 5 — מהמטבח לעולם</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:11:30</span>
-              <span class="tl-item-meta-item">📅 נשלח 08.05 · 6 ימים</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v1">נשלח ללקוח 1</div>
+            <div class="mb-deadline tomorrow">⚠️ +2 ימים</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">עמית מורן</div>
-              <div class="tl-item-title">פרק 31 — שיחה עם אבא</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">עמית מורן</div>
+                <div class="mb-pulse-title">פרק 31 — שיחה עם אבא</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:32:08</span>
-              <span class="tl-item-meta-item">📅 נשלח 11.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v1">נשלח ללקוח 1</div>
+            <div class="mb-deadline later">🗓 +5 ימים</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments">0</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
+        </div>
+        <div class="mb-add-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          הוסף פריט
         </div>
       </section>
 
-      <!-- 3. התקבלו תיקונים מהלקוח (V1 revisions) -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot revisions"></div>
-          <div class="tl-section-title">3. התקבלו תיקונים מהלקוח</div>
-          <span class="tl-section-count urgent">2</span>
-          <div class="tl-section-meta">🔥 לעבד היום</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <!-- 3. התקבלו תיקונים מהלקוח -->
+      <section class="mb-group">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe revisions"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">3. התקבלו תיקונים מהלקוח</div>
+          <span class="mb-group-count urgent">2</span>
+          <div class="mb-group-meta">🔥 לעבד היום</div>
+          <div class="mb-group-actions">
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
+          </div>
         </header>
-        <div class="tl-list">
-          <div class="tl-item new">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">
-                <span>דניאל כהן</span>
-                <span class="new-badge">חדש</span>
+        <div class="mb-columns">
+          <div>פרק</div>
+          <div style="text-align: center;">בעלים</div>
+          <div style="text-align: center;">סטטוס</div>
+          <div style="text-align: center;">דדליין</div>
+          <div style="text-align: center;">גרסה</div>
+          <div style="text-align: center;">💬</div>
+          <div></div>
+        </div>
+        <div class="mb-group-body">
+          <div class="mb-pulse new urgent">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar">DK</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">דניאל כהן <span class="mb-new-badge">חדש</span></div>
+                <div class="mb-pulse-title">פרק 24 — איך בונים סטארטאפ ב-2026</div>
               </div>
-              <div class="tl-item-title">פרק 24 — איך בונים סטארטאפ ב-2026</div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">🎬 5 רילס</span>
-              <span class="tl-item-meta-item">💬 3 הערות</span>
-              <span class="tl-item-meta-item">📅 היום 09:32</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+                <div class="mb-owner-avatar editor">EO</div>
+                <div class="mb-owner-avatar designer">DZ</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status revisions">תיקונים V1</div>
+            <div class="mb-deadline today">🔥 היום</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments has-new">3</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">יואב פרץ</div>
-              <div class="tl-item-title">פרק 12 — לחזק את הסיום</div>
+          <div class="mb-pulse urgent">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">יואב פרץ</div>
+                <div class="mb-pulse-title">פרק 12 — לחזק את הסיום</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">💬 4 הערות</span>
-              <span class="tl-item-meta-item">📅 13.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+                <div class="mb-owner-avatar editor">EO</div>
+              </div>
             </div>
-            <span class="tl-item-version">V1</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status revisions">תיקונים V1</div>
+            <div class="mb-deadline tomorrow">⚠️ מחר</div>
+            <div class="mb-version v1">V1</div>
+            <div class="mb-comments">4</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
+        </div>
+        <div class="mb-add-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          הוסף פריט
         </div>
       </section>
 
       <!-- 4. נשלח ללקוח 2 -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot sent"></div>
-          <div class="tl-section-title">4. נשלח ללקוח 2</div>
-          <span class="tl-section-count">3</span>
-          <div class="tl-section-meta">סבב שני · ממתין לאישור</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <section class="mb-group">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe sent-v2"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">4. נשלח ללקוח 2</div>
+          <span class="mb-group-count">3</span>
+          <div class="mb-group-meta">סבב שני · ממתין לאישור</div>
+          <div class="mb-group-actions">
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
+          </div>
         </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar">DK</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">דניאל כהן</div>
-              <div class="tl-item-title">פרק 23 — מה זה Product Market Fit באמת</div>
+        <div class="mb-columns">
+          <div>פרק</div>
+          <div style="text-align: center;">בעלים</div>
+          <div style="text-align: center;">סטטוס</div>
+          <div style="text-align: center;">דדליין</div>
+          <div style="text-align: center;">גרסה</div>
+          <div style="text-align: center;">💬</div>
+          <div></div>
+        </div>
+        <div class="mb-group-body">
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar">DK</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">דניאל כהן</div>
+                <div class="mb-pulse-title">פרק 23 — מה זה Product Market Fit באמת</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:14:20</span>
-              <span class="tl-item-meta-item">📅 נשלח 10.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version">V2</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v2">נשלח ללקוח 2</div>
+            <div class="mb-deadline week">🗓 +4 ימים</div>
+            <div class="mb-version v2">V2</div>
+            <div class="mb-comments">2</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">שירה לוי</div>
-              <div class="tl-item-title">פרק 17 — לא נשבר</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">שירה לוי</div>
+                <div class="mb-pulse-title">פרק 17 — לא נשבר</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 0:54:50</span>
-              <span class="tl-item-meta-item">📅 נשלח 09.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+                <div class="mb-owner-avatar editor">EO</div>
+              </div>
             </div>
-            <span class="tl-item-version">V2</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v2">נשלח ללקוח 2</div>
+            <div class="mb-deadline week">🗓 +3 ימים</div>
+            <div class="mb-version v2">V2</div>
+            <div class="mb-comments">5</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">רן מילר</div>
-              <div class="tl-item-title">פרק 7 — איך לעבור גירושים</div>
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">RM</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">רן מילר</div>
+                <div class="mb-pulse-title">פרק 7 — איך לעבור גירושים</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:18:42</span>
-              <span class="tl-item-meta-item">📅 נשלח 07.05 · 7 ימים!</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version">V2</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v2">נשלח ללקוח 2</div>
+            <div class="mb-deadline tomorrow">⚠️ מחר · 7 ימים!</div>
+            <div class="mb-version v2">V2</div>
+            <div class="mb-comments">1</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
+        </div>
+        <div class="mb-add-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          הוסף פריט
         </div>
       </section>
 
       <!-- 5. התקבלו תיקונים מהלקוח 2 -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot revisions"></div>
-          <div class="tl-section-title">5. התקבלו תיקונים מהלקוח 2</div>
-          <span class="tl-section-count urgent">1</span>
-          <div class="tl-section-meta">⚠️ סבב אחרון לפני סופי</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </header>
-        <div class="tl-list">
-          <div class="tl-item new">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">
-                <span>שירה לוי</span>
-                <span class="new-badge">חדש</span>
-              </div>
-              <div class="tl-item-title">פרק 18 — הקאמבק שלי</div>
-            </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">💬 2 הערות</span>
-              <span class="tl-item-meta-item">📅 היום 08:15</span>
-            </div>
-            <span class="tl-item-version">V2</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+      <section class="mb-group">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe revisions-2"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">5. התקבלו תיקונים מהלקוח 2</div>
+          <span class="mb-group-count urgent">1</span>
+          <div class="mb-group-meta">⚠️ סבב אחרון לפני סופי</div>
+          <div class="mb-group-actions">
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
           </div>
+        </header>
+        <div class="mb-columns">
+          <div>פרק</div>
+          <div style="text-align: center;">בעלים</div>
+          <div style="text-align: center;">סטטוס</div>
+          <div style="text-align: center;">דדליין</div>
+          <div style="text-align: center;">גרסה</div>
+          <div style="text-align: center;">💬</div>
+          <div></div>
+        </div>
+        <div class="mb-group-body">
+          <div class="mb-pulse new urgent">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SL</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">שירה לוי <span class="mb-new-badge">חדש</span></div>
+                <div class="mb-pulse-title">פרק 18 — הקאמבק שלי</div>
+              </div>
+            </div>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+                <div class="mb-owner-avatar editor">EO</div>
+              </div>
+            </div>
+            <div class="mb-status revisions-2">תיקונים V2</div>
+            <div class="mb-deadline today">🔥 היום</div>
+            <div class="mb-version v2">V2</div>
+            <div class="mb-comments has-new">2</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
+          </div>
+        </div>
+        <div class="mb-add-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          הוסף פריט
         </div>
       </section>
 
-      <!-- 6. נשלח ללקוח 3 (final) -->
-      <section class="tl-section">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot sent"></div>
-          <div class="tl-section-title">6. נשלח ללקוח 3 — סופי</div>
-          <span class="tl-section-count">1</span>
-          <div class="tl-section-meta">סבב אחרון — אם לא יאשר ב-3 ימים, יוכרע אוטומטית</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <!-- 6. נשלח ללקוח 3 -->
+      <section class="mb-group">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe sent-v3"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">6. נשלח ללקוח 3 — סופי</div>
+          <span class="mb-group-count">1</span>
+          <div class="mb-group-meta">סבב אחרון — אם לא יאשר ב-3 ימים, יוכרע אוטומטית</div>
+          <div class="mb-group-actions">
+            <button class="mb-action-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
+          </div>
         </header>
-        <div class="tl-list">
-          <div class="tl-item">
-            <div class="tl-item-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
-            <div class="tl-item-content">
-              <div class="tl-item-customer">יואב פרץ</div>
-              <div class="tl-item-title">פרק 11 — אבא לראשונה</div>
+        <div class="mb-columns">
+          <div>פרק</div>
+          <div style="text-align: center;">בעלים</div>
+          <div style="text-align: center;">סטטוס</div>
+          <div style="text-align: center;">דדליין</div>
+          <div style="text-align: center;">גרסה</div>
+          <div style="text-align: center;">💬</div>
+          <div></div>
+        </div>
+        <div class="mb-group-body">
+          <div class="mb-pulse">
+            <div class="mb-pulse-name">
+              <div class="mb-pulse-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">YP</div>
+              <div class="mb-pulse-text">
+                <div class="mb-pulse-customer">יואב פרץ</div>
+                <div class="mb-pulse-title">פרק 11 — אבא לראשונה</div>
+              </div>
             </div>
-            <div class="tl-item-meta">
-              <span class="tl-item-meta-item">⏱ 1:24:10</span>
-              <span class="tl-item-meta-item">📅 נשלח 13.05</span>
+            <div class="mb-pulse-owner">
+              <div class="mb-owner-stack">
+                <div class="mb-owner-avatar">AG</div>
+              </div>
             </div>
-            <span class="tl-item-version">V3</span>
-            <button class="tl-item-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <div class="mb-status sent-v3">סופי</div>
+            <div class="mb-deadline week">🗓 +2 ימים</div>
+            <div class="mb-version v3">V3</div>
+            <div class="mb-comments">3</div>
+            <div class="mb-pulse-action"><button class="mb-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div>
           </div>
         </div>
       </section>
 
       <!-- 7. הסתיים -->
-      <section class="tl-section collapsed">
-        <header class="tl-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-          <div class="tl-status-dot approved"></div>
-          <div class="tl-section-title">7. הסתיים</div>
-          <span class="tl-section-count">18</span>
-          <div class="tl-section-meta">↑ 28% לעומת חודש שעבר · החודש בלבד</div>
-          <svg class="tl-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <section class="mb-group collapsed">
+        <header class="mb-group-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <div class="mb-group-stripe approved"></div>
+          <svg class="mb-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="mb-group-title">7. הסתיים</div>
+          <span class="mb-group-count">18</span>
+          <div class="mb-group-meta">↑ 28% לעומת חודש שעבר · החודש בלבד</div>
         </header>
-        <div class="tl-list">
-          <div class="tl-empty">לחץ להרחיב 18 פרקים שאושרו</div>
+        <div class="mb-group-body" style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 13px;">
+          לחץ להרחיב 18 פרקים שאושרו
         </div>
       </section>
 
     </div>
+
+
 
     <!-- ═══════ VIEW: BY DEADLINE ═══════ -->
     <div class="view-deadline">
@@ -1349,7 +2285,98 @@ input { font-family: inherit; }
       </div>
     </div>
 
+    </div><!-- /main content column -->
+
+    <!-- ═══════ ACTIVITY FEED ═══════ -->
+    <aside class="activity-feed">
+      <div class="feed-header">
+        <div class="feed-title">פעילות חיה</div>
+        <button class="mb-action-icon" title="הגדרות"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
+      </div>
+      <div class="feed-filter">
+        <button class="active">הכל</button>
+        <button>לקוחות</button>
+        <button>צוות</button>
+        <button>מערכת</button>
+      </div>
+      <div class="feed-list">
+
+        <div class="feed-item">
+          <div class="feed-avatar client-dk">DK</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>דניאל כהן</strong> השאיר <span class="feed-action-tag">5 רילס</span> + <span class="feed-action-tag">3 הערות</span> על פרק 24</div>
+            <div class="feed-time">לפני 12 דקות · פרק 24</div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-avatar client-sl">SL</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>שירה לוי</strong> שלחה <span class="feed-action-tag">2 תיקונים</span> · סבב אחרון V2</div>
+            <div class="feed-time">לפני 1 שעה · פרק 18</div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-avatar system">⚙</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>אוטומציה</strong> · נשלחה תזכורת WhatsApp ל<strong>רן מילר</strong> (7 ימים ללא תגובה)</div>
+            <div class="feed-time">לפני 2 שעות · פרק 7</div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-avatar" style="background: linear-gradient(135deg, var(--red), var(--red-dark));">AG</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>אלון</strong> העלה גרסה V2 לפרק 23 · נשלח ל<strong>דניאל כהן</strong></div>
+            <div class="feed-time">לפני 3 שעות · פרק 23</div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-avatar client-yp">YP</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>יואב פרץ</strong> אישר את גרסה V2 של פרק 6 · <span class="feed-action-tag">הסתיים</span></div>
+            <div class="feed-time">אתמול · פרק 6</div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-avatar system">🎬</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>Bunny</strong> · סיים transcoding של פרק 26 · מוכן לצפייה</div>
+            <div class="feed-time">אתמול · פרק 26</div>
+          </div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-avatar client-am">AM</div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>עמית מורן</strong> פתח את הפורטל לראשונה לפרק 31</div>
+            <div class="feed-time">לפני יומיים · פרק 31</div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    </div><!-- /workspace -->
+
   </main>
+</div>
+
+<!-- ═══════ TOAST NOTIFICATION ═══════ -->
+<div class="toast" id="toast">
+  <div class="toast-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div class="toast-content">
+    <div class="toast-title">פרק 24 עודכן בהצלחה</div>
+    <div class="toast-text">המייל + ווצאפ נשלחו לדניאל כהן · 3 שניות</div>
+  </div>
+  <button class="toast-close" onclick="document.getElementById('toast').style.display='none'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
 </div>
 
 <script>
@@ -1366,10 +2393,10 @@ try {
   if (saved) document.documentElement.setAttribute('data-theme', saved);
 } catch(e) {}
 
-// View toggle (status / deadline)
+// View toggle (status / deadline / kanban / calendar / gantt)
 function setView(view, btn) {
   document.documentElement.setAttribute('data-view', view);
-  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.view-tab').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   try { localStorage.setItem('bunker-view', view); } catch(e) {}
 }
@@ -1377,11 +2404,21 @@ try {
   const savedView = localStorage.getItem('bunker-view');
   if (savedView) {
     document.documentElement.setAttribute('data-view', savedView);
-    document.querySelectorAll('.view-toggle button').forEach((b, i) => {
-      b.classList.toggle('active', (i === 0 && savedView === 'status') || (i === 1 && savedView === 'deadline'));
-    });
+    const tabs = document.querySelectorAll('.view-tab');
+    const viewMap = { 'status': 0, 'deadline': 1 };
+    if (viewMap[savedView] !== undefined) {
+      tabs.forEach(t => t.classList.remove('active'));
+      if (tabs[viewMap[savedView]]) tabs[viewMap[savedView]].classList.add('active');
+    }
   }
 } catch(e) {}
+
+// Auto-hide toast after 8 seconds
+setTimeout(() => {
+  const t = document.getElementById('toast');
+  if (t) t.style.opacity = '0';
+  setTimeout(() => { if (t) t.style.display = 'none'; }, 400);
+}, 8000);
 </script>
 
 </body>
