@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הצעת מחיר · הבונקר — Podcast Studio</title>
+<meta name="description" content="חבילות הפקת פודקאסט מקצועיות עם מסירה באותו יום. צילום בלבד / צילום+עריכה / ריטיינר Full Service.">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --black-soft: #111111;
+  --black-medium: #181818;
+  --black-light: #242424;
+  --white: #ffffff;
+  --gray-200: #d4d4d4;
+  --gray-400: #909090;
+  --gray-500: #585858;
+  --gray-700: #404040;
+  --red: #D32020;
+  --red-dark: #b31818;
+  --red-light: #ef4444;
+  --red-glow: rgba(211, 32, 32, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Heebo', sans-serif;
+  color: var(--white);
+  background: var(--black);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+.rec-dot {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 24px rgba(211, 32, 32, 0.7), 0 0 6px var(--red);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* === HEADER === */
+.header {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 50;
+  padding: 18px 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.brand-name {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+.cta-header {
+  background: var(--red);
+  color: white;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.15s;
+}
+.cta-header:hover { background: var(--red-dark); }
+
+/* === HERO === */
+.hero {
+  padding: 160px 0 80px;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(211, 32, 32, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(211, 32, 32, 0.08) 0%, transparent 50%);
+  text-align: center;
+  position: relative;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red-glow);
+  border: 1px solid rgba(211, 32, 32, 0.3);
+  color: var(--red-light);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 28px;
+}
+.hero-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulse 2s ease-in-out infinite;
+}
+.hero h1 {
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin-bottom: 24px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero h1 .accent { color: var(--red); }
+.hero p {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--gray-200);
+  max-width: 640px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 16px 32px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--red);
+  color: white;
+  box-shadow: 0 8px 24px rgba(211, 32, 32, 0.3);
+}
+.btn-primary:hover {
+  background: var(--red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(211, 32, 32, 0.4);
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-strong);
+  color: white;
+}
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* === USPs === */
+.usps {
+  padding: 80px 0 60px;
+}
+.section-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  font-family: 'Inter', sans-serif;
+}
+.section-title {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section-subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: var(--gray-400);
+  max-width: 600px;
+  margin: 0 auto 56px;
+  line-height: 1.7;
+}
+.usps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+}
+.usp {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 26px;
+  transition: all 0.2s;
+}
+.usp:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+}
+.usp-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: var(--red-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  font-size: 26px;
+}
+.usp-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.usp-desc {
+  font-size: 14px;
+  color: var(--gray-400);
+  line-height: 1.7;
+}
+
+/* === PACKAGES === */
+.packages {
+  padding: 80px 0;
+  background:
+    linear-gradient(180deg, transparent 0%, var(--black-soft) 50%, transparent 100%);
+}
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 22px;
+  margin-top: 56px;
+  align-items: stretch;
+}
+.package {
+  background: var(--black-medium);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.25s;
+}
+.package:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-strong);
+}
+.package.featured {
+  background: linear-gradient(180deg, var(--black-medium), var(--black-soft));
+  border: 2px solid var(--red);
+  box-shadow: 0 12px 40px rgba(211, 32, 32, 0.15);
+  transform: scale(1.02);
+}
+.package.featured:hover {
+  transform: scale(1.02) translateY(-6px);
+  box-shadow: 0 16px 48px rgba(211, 32, 32, 0.25);
+}
+.package-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--red);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+}
+.package-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+}
+.package-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+.package-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.package-price .amount {
+  font-size: 50px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+}
+.package-price .currency {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gray-400);
+}
+.package-price-unit {
+  font-size: 13px;
+  color: var(--gray-400);
+  margin-bottom: 24px;
+}
+.package-old-price {
+  text-decoration: line-through;
+  color: var(--gray-500);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.package-desc {
+  font-size: 14px;
+  color: var(--gray-200);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  min-height: 50px;
+}
+.package-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  flex: 1;
+}
+.package-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  border-bottom: 1px solid var(--border);
+}
+.package-features li:last-child { border-bottom: none; }
+.package-features li .check {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--red-glow);
+  color: var(--red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  margin-top: 2px;
+}
+.package-features li.star .check {
+  background: var(--red);
+  color: white;
+  box-shadow: 0 0 12px rgba(211, 32, 32, 0.4);
+}
+.package-features li.star {
+  font-weight: 700;
+}
+.package-features li.not-included {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+.package-features li.not-included .check {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--gray-500);
+}
+.package-cta {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-strong);
+  color: white;
+}
+.package-cta:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--white);
+}
+.package.featured .package-cta {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 6px 16px rgba(211, 32, 32, 0.3);
+}
+.package.featured .package-cta:hover {
+  background: var(--red-dark);
+  transform: translateY(-1px);
+}
+
+/* === COMPARISON === */
+.comparison {
+  padding: 80px 0;
+}
+.comparison-table {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.comparison-row:last-child { border-bottom: none; }
+.comparison-row.header {
+  background: var(--black-medium);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+}
+.comparison-row.header > div {
+  padding: 18px 16px;
+  text-align: center;
+}
+.comparison-row.header > div:first-child { text-align: right; color: var(--gray-400); }
+.comparison-row.header > div.bunker-col {
+  background: var(--red);
+  color: white;
+  position: relative;
+}
+.comparison-row > div {
+  padding: 16px;
+  font-size: 14px;
+  border-left: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comparison-row > div:first-child {
+  border-left: none;
+  justify-content: flex-start;
+  font-weight: 600;
+  color: var(--gray-200);
+}
+.comparison-row > div.yes {
+  color: var(--red-light);
+  font-weight: 800;
+  font-size: 18px;
+}
+.comparison-row > div.no {
+  color: var(--gray-500);
+}
+.comparison-row > div.partial {
+  color: var(--gray-400);
+}
+.comparison-row.bunker-row .bunker-col-cell {
+  background: rgba(211, 32, 32, 0.05);
+  color: var(--red-light);
+  font-weight: 700;
+}
+
+/* === ADDONS === */
+.addons {
+  padding: 80px 0;
+  background: var(--black-soft);
+}
+.addons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 48px;
+}
+.addon {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.addon-icon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--red-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.addon-info { flex: 1; }
+.addon-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.addon-desc {
+  font-size: 12px;
+  color: var(--gray-400);
+}
+.addon-price {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--red-light);
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+}
+.addon-price small {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-weight: 600;
+  display: block;
+}
+
+/* === TESTIMONIALS === */
+.testimonials {
+  padding: 80px 0;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+.testimonial {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 30px;
+  position: relative;
+}
+.testimonial::before {
+  content: '"';
+  position: absolute;
+  top: 14px; right: 22px;
+  font-size: 70px;
+  color: var(--red);
+  opacity: 0.2;
+  font-family: 'Inter', serif;
+  font-weight: 900;
+  line-height: 1;
+}
+.testimonial-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--gray-200);
+  margin-bottom: 22px;
+  position: relative;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+}
+.testimonial-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+.testimonial-role {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-top: 2px;
+}
+
+/* === FAQ === */
+.faq {
+  padding: 80px 0;
+  background: var(--black-soft);
+}
+.faq-list {
+  max-width: 800px;
+  margin: 48px auto 0;
+}
+.faq-item {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.faq-item:hover { border-color: var(--border-strong); }
+.faq-item summary {
+  padding: 22px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  user-select: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  font-size: 24px;
+  color: var(--red);
+  font-weight: 300;
+  transition: transform 0.2s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-answer {
+  padding: 0 24px 22px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--gray-200);
+}
+
+/* === FINAL CTA === */
+.final-cta {
+  padding: 100px 0;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(211, 32, 32, 0.15) 0%, transparent 70%);
+}
+.final-cta h2 {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+.final-cta p {
+  font-size: 18px;
+  color: var(--gray-200);
+  max-width: 540px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+.final-cta-btn {
+  background: var(--red);
+  color: white;
+  padding: 20px 42px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 12px 36px rgba(211, 32, 32, 0.3);
+  transition: all 0.2s;
+}
+.final-cta-btn:hover {
+  background: var(--red-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 44px rgba(211, 32, 32, 0.4);
+}
+.final-cta-hint {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+/* === FOOTER === */
+.footer {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 13px;
+}
+.footer .brand {
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+/* === MOBILE === */
+@media (max-width: 720px) {
+  .package.featured { transform: none; }
+  .comparison-row { grid-template-columns: 1.2fr 0.7fr 0.7fr 0.7fr; font-size: 12px; }
+  .comparison-row > div { padding: 12px 8px; }
+  .comparison-row.header > div { font-size: 10px; padding: 12px 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <span class="rec-dot"></span>
+      <span class="brand-name">הבונקר</span>
+    </div>
+    <a href="#contact" class="cta-header">בואו נדבר ←</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">חדש בישראל · באותו יום</div>
+    <h1>הפודקאסט שלך<br>מוכן <span class="accent">באותו יום של ההקלטה</span></h1>
+    <p>אולפן בוטיק להפקת פודקאסט וידאו, עם פורטל לקוח מתקדם וגרסה ראשונית מוכנה לצפייה אצלך עוד באותו יום — לפני שיצאת מהאולפן.</p>
+    <div class="hero-ctas">
+      <a href="#packages" class="btn btn-primary">ראה חבילות ←</a>
+      <a href="#why" class="btn btn-secondary">למה הבונקר?</a>
+    </div>
+  </div>
+</section>
+
+<!-- USPs -->
+<section id="why" class="usps">
+  <div class="container">
+    <div class="section-label">למה הבונקר</div>
+    <h2 class="section-title">4 דברים שאף אולפן אחר לא עושה</h2>
+    <p class="section-subtitle">בנינו מערכת מקצה לקצה — הקלטה, עריכה, סימון רילסים והפצה. הכל במקום אחד, באיכות שאי אפשר לקבל בערפלי המייל.</p>
+
+    <div class="usps-grid">
+      <div class="usp">
+        <div class="usp-icon">⚡</div>
+        <div class="usp-title">באותו יום הקלטה</div>
+        <div class="usp-desc">סיימת לצלם? עוד באותו יום העורך שלנו מעביר לך גרסה ראשונית עם פתיח, סגיר וכתוביות. לא חיכינו לשבוע — היום.</div>
+      </div>
+
+      <div class="usp">
+        <div class="usp-icon">🎯</div>
+        <div class="usp-title">פורטל סימון רילסים</div>
+        <div class="usp-desc">אתה צופה בפרק בלינק יעודי ומסמן בעצמך בדיוק איפה ה-5 רילסים שאתה רוצה. ללא שיחות מיותרות.</div>
+      </div>
+
+      <div class="usp">
+        <div class="usp-icon">🤖</div>
+        <div class="usp-title">ניתוב אוטומטי</div>
+        <div class="usp-desc">כל קובץ מועלה אוטומטית למקום הנכון — הפרק לפורטל שלך, ההערות לעורך, האישור למפיק. בלי קבצים אבודים.</div>
+      </div>
+
+      <div class="usp">
+        <div class="usp-icon">📱</div>
+        <div class="usp-title">איכות מקצועית</div>
+        <div class="usp-desc">2 מצלמות 4K, מיקרופונים אולפניים, צוות וותיק. תוצר שמוכן לעלות ל-Spotify, YouTube ו-TikTok כמו שהוא.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages" class="packages">
+  <div class="container">
+    <div class="section-label">חבילות</div>
+    <h2 class="section-title">3 דרכים לעבוד איתנו</h2>
+    <p class="section-subtitle">כל החבילות כוללות צילום 4K מ-2 מצלמות, מיקרופונים אולפניים, וצוות שיודע איך לעשות לך נוח מול המיקרופון.</p>
+
+    <div class="packages-grid">
+
+      <!-- Package 1: Recording Only -->
+      <div class="package">
+        <div class="package-name">חבילה 1</div>
+        <div class="package-title">רק צילום</div>
+        <div class="package-price">
+          <span class="amount">1,200</span>
+          <span class="currency">₪</span>
+        </div>
+        <div class="package-price-unit">לשעה · עד 3 משתתפים</div>
+        <p class="package-desc">לפודקאסטרים שעורכים בעצמם או עם עורך חיצוני. אתה מקבל את כל הקבצים הגולמיים תוך 24 שעות.</p>
+        <ul class="package-features">
+          <li><span class="check">✓</span> אולפן בוטיק עם אקוסטיקה מקצועית</li>
+          <li><span class="check">✓</span> 2 מצלמות 4K (זוויות שונות)</li>
+          <li><span class="check">✓</span> Multi-track audio (כל מיקרופון בנפרד)</li>
+          <li><span class="check">✓</span> טכנאי סאונד צמוד</li>
+          <li><span class="check">✓</span> מסירת כל הקבצים תוך 24 שעות</li>
+          <li class="not-included"><span class="check">×</span> עריכה</li>
+          <li class="not-included"><span class="check">×</span> רילסים</li>
+          <li class="not-included"><span class="check">×</span> פורטל לקוח</li>
+        </ul>
+        <a href="#contact" class="package-cta">הזמן הקלטה</a>
+      </div>
+
+      <!-- Package 2: Recording + Edit (FEATURED) -->
+      <div class="package featured">
+        <div class="package-badge">⭐ המומלץ</div>
+        <div class="package-name">חבילה 2</div>
+        <div class="package-title">צילום + עריכה</div>
+        <div class="package-price">
+          <span class="amount">2,400</span>
+          <span class="currency">₪</span>
+        </div>
+        <div class="package-price-unit">לפרק · 90 דקות הקלטה + עריכה מלאה</div>
+        <p class="package-desc">הפתרון השלם לפודקאסטרים שרוצים תוצאה מוכנה לפרסום. כולל את ה-USP שלנו: גרסה ראשונית באותו יום.</p>
+        <ul class="package-features">
+          <li><span class="check">✓</span> כל מה שבחבילה 1</li>
+          <li class="star"><span class="check">★</span> גרסה ראשונית באותו יום</li>
+          <li><span class="check">✓</span> עריכת פרק מלא (קאטים + פתיח + סגיר)</li>
+          <li><span class="check">✓</span> כתוביות אוטומטיות בעברית</li>
+          <li><span class="check">✓</span> 5 רילסים בעריכה מקצועית</li>
+          <li class="star"><span class="check">★</span> פורטל לקוח לסימון רילסים</li>
+          <li><span class="check">✓</span> 3 סבבי תיקונים</li>
+          <li><span class="check">✓</span> מסירה סופית תוך 5 ימים</li>
+          <li class="not-included"><span class="check">×</span> העלאה אוטומטית לרשתות</li>
+        </ul>
+        <a href="#contact" class="package-cta">הזמן את החבילה →</a>
+      </div>
+
+      <!-- Package 3: Retainer Full Service -->
+      <div class="package">
+        <div class="package-name">חבילה 3</div>
+        <div class="package-title">ריטיינר Full Service</div>
+        <div class="package-price">
+          <span class="amount">7,500</span>
+          <span class="currency">₪</span>
+        </div>
+        <div class="package-price-unit">לחודש · עד 4 פרקים = 1,875₪/פרק</div>
+        <p class="package-desc">לפודקאסטרים שרוצים להתמקד בתוכן ולא בלוגיסטיקה. אנחנו דואגים להכל — מההקלטה ועד שהפרק חי ברשתות.</p>
+        <ul class="package-features">
+          <li><span class="check">✓</span> 4 פרקים מלאים בחודש</li>
+          <li><span class="check">✓</span> כל מה שבחבילה 2 (×4)</li>
+          <li class="star"><span class="check">★</span> העלאה אוטומטית: Spotify, Apple, YouTube</li>
+          <li class="star"><span class="check">★</span> פרסום רילסים: Instagram, TikTok, Shorts</li>
+          <li><span class="check">✓</span> ספרייה פרטית של כל הפרקים שלך</li>
+          <li><span class="check">✓</span> אנליטיקס חודשי + המלצות</li>
+          <li><span class="check">✓</span> תעדוף תור עריכה</li>
+          <li><span class="check">✓</span> WhatsApp ישיר לצוות</li>
+        </ul>
+        <a href="#contact" class="package-cta">דבר איתנו על ריטיינר</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison">
+  <div class="container">
+    <div class="section-label">השוואה</div>
+    <h2 class="section-title">למה אנחנו עולים מעט יותר —<br>ולמה זה משתלם</h2>
+    <p class="section-subtitle">השוואה לחבילה דומה במחיר אצל מתחרים מובילים בישראל.</p>
+
+    <div class="comparison-table">
+      <div class="comparison-row header">
+        <div>מה כלול</div>
+        <div class="bunker-col">🎙 הבונקר</div>
+        <div>VideoLab</div>
+        <div>Liron Music</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>מחיר חבילה דומה</div>
+        <div class="bunker-col-cell">₪2,400</div>
+        <div>₪2,500</div>
+        <div>₪2,250 (90ד׳)</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>צילום + עריכת פרק מלא</div>
+        <div class="yes bunker-col-cell">✓</div>
+        <div class="yes">✓</div>
+        <div class="yes">✓</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>מספר רילסים</div>
+        <div class="bunker-col-cell"><strong>5</strong></div>
+        <div>3</div>
+        <div>2</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>כתוביות בעברית</div>
+        <div class="yes bunker-col-cell">✓</div>
+        <div class="no">×</div>
+        <div class="no">×</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>זמן מסירה ראשון</div>
+        <div class="bunker-col-cell"><strong>אותו יום</strong></div>
+        <div>3-5 ימים</div>
+        <div>7 ימים</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>פורטל לקוח לסימון רילסים</div>
+        <div class="yes bunker-col-cell">✓</div>
+        <div class="no">×</div>
+        <div class="no">×</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>סבבי תיקונים</div>
+        <div class="bunker-col-cell"><strong>3</strong></div>
+        <div>1-2</div>
+        <div>1</div>
+      </div>
+      <div class="comparison-row bunker-row">
+        <div>אפשרות ריטיינר חודשי</div>
+        <div class="yes bunker-col-cell">✓</div>
+        <div class="no">×</div>
+        <div class="no">×</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section class="addons">
+  <div class="container">
+    <div class="section-label">תוספות</div>
+    <h2 class="section-title">בנה את החבילה שלך</h2>
+    <p class="section-subtitle">אם החבילה לא מספיקה — הוסף תוספות לפי מה שאתה צריך.</p>
+
+    <div class="addons-grid">
+      <div class="addon">
+        <div class="addon-icon">📝</div>
+        <div class="addon-info">
+          <div class="addon-title">כתוביות מסונכרנות</div>
+          <div class="addon-desc">SRT מקצועי לפרק המלא</div>
+        </div>
+        <div class="addon-price">+200₪<small>לפרק</small></div>
+      </div>
+
+      <div class="addon">
+        <div class="addon-icon">🎬</div>
+        <div class="addon-info">
+          <div class="addon-title">ריל נוסף</div>
+          <div class="addon-desc">מעבר ל-5 הכלולים בחבילה</div>
+        </div>
+        <div class="addon-price">+200₪<small>לריל</small></div>
+      </div>
+
+      <div class="addon">
+        <div class="addon-icon">📡</div>
+        <div class="addon-info">
+          <div class="addon-title">העלאה לרשתות</div>
+          <div class="addon-desc">YouTube + Spotify + Apple</div>
+        </div>
+        <div class="addon-price">+600₪<small>לחודש</small></div>
+      </div>
+
+      <div class="addon">
+        <div class="addon-icon">🎤</div>
+        <div class="addon-info">
+          <div class="addon-title">מנחה מקצועי</div>
+          <div class="addon-desc">מגיש מנוסה לאירוח</div>
+        </div>
+        <div class="addon-price">+800₪<small>לפרק</small></div>
+      </div>
+
+      <div class="addon">
+        <div class="addon-icon">📐</div>
+        <div class="addon-info">
+          <div class="addon-title">פתיח/סגיר מותאמים</div>
+          <div class="addon-desc">חד-פעמי, מעוצב לפרק</div>
+        </div>
+        <div class="addon-price">+1,500₪<small>חד-פעמי</small></div>
+      </div>
+
+      <div class="addon">
+        <div class="addon-icon">🎙</div>
+        <div class="addon-info">
+          <div class="addon-title">משתתף נוסף</div>
+          <div class="addon-desc">מעבר ל-3 משתתפים בסטנדרט</div>
+        </div>
+        <div class="addon-price">+300₪<small>לפרק</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-label">לקוחות מספרים</div>
+    <h2 class="section-title">המוצר שמדבר בעד עצמו</h2>
+
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <p class="testimonial-text">בכל אולפן אחר חיכיתי שבוע לפרק. בבונקר קיבלתי גרסה ראשונה ביום ההקלטה ויכולתי לפרסם תוך 48 שעות. בלתי נתפס.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DK</div>
+          <div>
+            <div class="testimonial-name">דניאל כהן</div>
+            <div class="testimonial-role">פודקאסט "בונים סטארטאפ"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-text">הפורטל לסימון רילסים שינה לי את החיים. במקום לכתוב 5 הערות במייל — אני פשוט מסמן בלינק ושולח. הם מבינים בדיוק מה אני רוצה.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SL</div>
+          <div>
+            <div class="testimonial-name">שירה לוי</div>
+            <div class="testimonial-role">פודקאסט "מקאמבק"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-text">בריטיינר חודשי. 4 פרקים בחודש, הם דואגים לכל ההפצה, ואני מתעסק רק בתוכן. הצמיחה ביוטיוב שלי מאז שהתחלתי איתם — ×3.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">AM</div>
+          <div>
+            <div class="testimonial-name">עמית מורן</div>
+            <div class="testimonial-role">פודקאסט "אבא ואני"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label">שאלות נפוצות</div>
+    <h2 class="section-title">כל מה שצריך לדעת</h2>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>איך זה אפשרי שהגרסה הראשונה מוכנה באותו יום?</summary>
+        <div class="faq-answer">בנינו מערכת אוטומטית של ניתוב קבצים: ברגע שמסיימים להקליט, הקבצים עוברים אוטומטית לעורך שכבר עובד עליהם תוך כדי הקלטה של הפרק הבא. תוך 4-6 שעות מסיום ההקלטה — אתה מקבל לינק לצפייה ראשונה. (סופי מתעדכן עם התיקונים שלך תוך 5 ימי עבודה).</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>איך עובד הפורטל לסימון רילסים?</summary>
+        <div class="faq-answer">אחרי שאנחנו מסיימים את העריכה הראשונית, אתה מקבל לינק יעודי. בלינק אתה רואה את הפרק המלא, יכול לצפות בכל מהירות, ולסמן בקליק את ה-5 קטעים שאתה רוצה שיהפכו לרילסים. אנחנו עורכים בדיוק לפי הסימונים. ללא שיחות, ללא מיילים מתוסכלים.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>מה ההבדל בין החבילה הרגילה לריטיינר?</summary>
+        <div class="faq-answer">ריטיינר חודשי כולל 4 פרקים בחודש (חיסכון של 21% לפרק), העלאה אוטומטית לכל הרשתות החברתיות, אנליטיקס חודשי, ותעדוף בתור העריכה. מתאים לפודקאסטרים שמייצרים תוכן באופן עקבי ורוצים להתמקד בתוכן ולא בלוגיסטיקה.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>אם אני רוצה יותר מ-5 רילסים?</summary>
+        <div class="faq-answer">כל ריל נוסף מעבר ל-5 הכלולים בחבילה — 200₪. אתה יכול לבחור בפורטל מספר בלתי מוגבל של נקודות זמן — וברגע הסיכום נגיד לך את העלות הסופית.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>מה קורה אם אני לא מרוצה?</summary>
+        <div class="faq-answer">חבילת "צילום + עריכה" כוללת 3 סבבי תיקונים. אם אחרי 3 סבבים עדיין יש בעיה — אנחנו נמצא פתרון, או נחזיר לך את הכסף על העריכה. ההקלטה עצמה (השעות באולפן) לא חוזרת.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>איפה אתם נמצאים? יש חניה?</summary>
+        <div class="faq-answer">האולפן ממוקם במרכז תל אביב. יש חניה חינמית למשתתפי הפודקאסט, ואנחנו נמצאים 5 דקות הליכה מתחנת רכבת הגנה. (פרטים מדויקים נשלח אחרי תיאום).</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="contact" class="final-cta">
+  <div class="container">
+    <h2>מוכן להוציא פודקאסט<br>שאפילו אתה תרצה לצפות בו?</h2>
+    <p>בוא נדבר 15 דקות — נגיד לך בדיוק מה החבילה המתאימה לך, ונקבע יום הקלטה ראשון.</p>
+    <a href="https://wa.me/972500000000?text=%D7%94%D7%99%2C+%D7%A8%D7%90%D7%99%D7%AA%D7%99+%D7%90%D7%AA+%D7%94%D7%94%D7%A6%D7%A2%D7%94+%D7%A9%D7%9C%D7%9B%D7%9D" class="final-cta-btn">
+      💬 דבר איתנו בוואטסאפ
+    </a>
+    <div class="final-cta-hint">תגובה תוך שעתיים בימי עסקים</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="brand">
+      <span class="rec-dot"></span>
+      <span class="brand-name">הבונקר</span>
+    </div>
+    <div>פודקאסט · קורסים דיגיטליים · תוכן</div>
+    <div style="margin-top: 10px; opacity: 0.7;">© 2026 הבונקר. כל הזכויות שמורות.</div>
+  </div>
+</footer>
+
+</body>
+</html>
