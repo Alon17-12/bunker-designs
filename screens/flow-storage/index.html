@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow: אחסון פרק · הבונקר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(211, 32, 32, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 100%, rgba(211, 32, 32, 0.04) 0%, transparent 50%);
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+.brand {
+  display: flex; align-items: center; gap: 12px; justify-content: center;
+  margin-bottom: 18px;
+}
+.rec-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #D32020;
+  box-shadow: 0 0 16px rgba(211, 32, 32, 0.7);
+  animation: pulse 2s ease-in-out infinite;
+}
+h1 {
+  text-align: center; font-size: 40px; font-weight: 900;
+  letter-spacing: -1px; margin-bottom: 12px;
+}
+h1 .accent { color: #D32020; }
+.subtitle {
+  text-align: center; color: #909090; font-size: 16px;
+  max-width: 600px; margin: 0 auto 48px; line-height: 1.7;
+}
+.flow-diagram {
+  background: #111; border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 28px; margin-bottom: 40px;
+  font-family: 'Inter', monospace; font-size: 13px;
+  line-height: 1.8; color: #d4d4d4;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  font-weight: 500;
+}
+.grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+.card {
+  background: #111; border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: all 0.2s; display: flex; flex-direction: column;
+}
+.card:hover {
+  border-color: #D32020; transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(211, 32, 32, 0.15);
+}
+.card-preview {
+  height: 200px;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.card-preview-emoji { font-size: 80px; opacity: 0.7; }
+.card-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: #D32020; color: white;
+  padding: 4px 10px; border-radius: 5px;
+  font-size: 10px; font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+}
+.card-body { padding: 24px; flex: 1; }
+.card-step {
+  font-size: 11px; font-weight: 800; color: #ef4444;
+  letter-spacing: 2px; margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.card-title {
+  font-size: 20px; font-weight: 800;
+  margin-bottom: 10px;
+}
+.card-desc {
+  font-size: 13px; color: #909090; line-height: 1.7;
+  margin-bottom: 16px;
+}
+.card-features {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 16px;
+}
+.feature {
+  background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08);
+  padding: 4px 10px; border-radius: 5px;
+  font-size: 11px; color: #909090; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+}
+.card-cta {
+  color: #ef4444; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.back {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: #909090; font-size: 13px;
+  margin-top: 40px; text-decoration: none;
+  justify-content: center; width: 100%;
+}
+.back:hover { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="brand">
+    <div class="rec-dot"></div>
+    <div style="font-size: 26px; font-weight: 900;">הבונקר</div>
+  </div>
+
+  <h1>Flow: <span class="accent">סוף יום צילום</span></h1>
+  <p class="subtitle">איך זה עובד מסיום ההקלטה עד שהפרק מוכן לעורך. שני מסכים עיקריים: טופס סיכום ללקוח + פנל אחסון לאדמין.</p>
+
+  <div class="flow-diagram">17:00  ━━ הקלטה מסתיימת ━━━━━━━━━━━━━━━━━━━━━━
+        אלון לוחץ "סיום פגישה" באדמין
+        → נוצר לינק לטופס סיכום ללקוח
+        → נשלח אוטומטית WhatsApp + מוצג QR על המסך
+
+17:05  ━━ הלקוח ממלא ━━━━━━━━━━━━━━━━━━━━━━━━
+        הטופס נפתח בנייד שלו (mobile-first)
+        7 שאלות, ~3 דקות
+        Submit → הוא יוצא מהאולפן
+
+17:10  ━━ אלון מקבל ━━━━━━━━━━━━━━━━━━━━━━━━━━
+        WhatsApp: "✅ דניאל מילא את הסיכום"
+        Email מעוצב + נכנס למסך הפרק באדמין
+
+17:15  ━━ אלון מעלה ל-Bunny ━━━━━━━━━━━━━━━━━━
+        Drag & Drop קובץ וידאו לעמוד הפרק
+        TUS upload עם resume + progress bar
+
+17:25  ━━ Bunny מעבד ━━━━━━━━━━━━━━━━━━━━━━━━━
+        כל סטטוס מתעדכן בזמן אמת:
+        ✓ Uploaded   ✓ Transcoding   ✓ HLS Ready
+        ✓ Thumbnail  ✓ Duration matches  ✓ Backup
+
+17:45  ━━ מוכן לעורך ━━━━━━━━━━━━━━━━━━━━━━━━
+        כפתור "שלח לעורך" נדלק ירוק
+        העורך מקבל התראה אוטומטית
+        מסירה ללקוח: 22:00 הערב</div>
+
+  <div class="grid">
+
+    <a href="./client-wrap-up-form.html" class="card">
+      <div class="card-preview">
+        <div class="card-preview-emoji">📱</div>
+        <div class="card-badge">לקוח · מובייל</div>
+      </div>
+      <div class="card-body">
+        <div class="card-step">STEP 1 · 17:05</div>
+        <div class="card-title">טופס סיכום ההקלטה</div>
+        <div class="card-desc">הלקוח ממלא בנייד מיד אחרי ההקלטה. כותרת, תיאור, רעיונות לרילסים, אווירה, ודירוג חוויה.</div>
+        <div class="card-features">
+          <span class="feature">Mobile-first</span>
+          <span class="feature">7 שדות</span>
+          <span class="feature">3 דקות</span>
+          <span class="feature">Submit → WhatsApp</span>
+        </div>
+        <div class="card-cta">פתח מסך ←</div>
+      </div>
+    </a>
+
+    <a href="./admin-storage-status.html" class="card">
+      <div class="card-preview">
+        <div class="card-preview-emoji">🐰</div>
+        <div class="card-badge">אדמין · אחסון</div>
+      </div>
+      <div class="card-body">
+        <div class="card-step">STEP 2 · 17:10+</div>
+        <div class="card-title">עמוד אחסון פרק</div>
+        <div class="card-desc">אלון רואה את תוכן הטופס, קבצי ה-Bunny, 6 בדיקות אחסון, timeline של השלבים, ומטה-דאטה מ-Bunny.</div>
+        <div class="card-features">
+          <span class="feature">טופס לקוח</span>
+          <span class="feature">קבצי Bunny + Progress</span>
+          <span class="feature">6 בדיקות אחסון</span>
+          <span class="feature">Timeline</span>
+          <span class="feature">Light/Dark</span>
+        </div>
+        <div class="card-cta">פתח מסך ←</div>
+      </div>
+    </a>
+
+  </div>
+
+  <a href="../" class="back">← חזרה לגלריית כל המסכים</a>
+
+</div>
+
+</body>
+</html>

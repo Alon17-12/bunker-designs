@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>סיכום ההקלטה · הבונקר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --black: #0a0a0a;
+  --black-soft: #111111;
+  --black-medium: #181818;
+  --black-light: #242424;
+  --red: #D32020;
+  --red-dark: #b31818;
+  --red-light: #ef4444;
+  --red-glow: rgba(211, 32, 32, 0.15);
+  --white: #ffffff;
+  --gray-200: #d4d4d4;
+  --gray-400: #909090;
+  --gray-500: #585858;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+}
+html { background: var(--black); }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.phone-frame {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--black);
+  padding: 0 20px 100px;
+  position: relative;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+.rec-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 12px rgba(211, 32, 32, 0.7);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* === HEADER === */
+.header {
+  padding: 24px 0 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 4px;
+}
+.brand-name {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+}
+.header-subtitle {
+  font-size: 10px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+/* === INTRO === */
+.intro {
+  margin-bottom: 28px;
+  text-align: center;
+}
+.intro-emoji {
+  font-size: 40px;
+  margin-bottom: 14px;
+}
+.intro h1 {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.intro p {
+  font-size: 14px;
+  color: var(--gray-200);
+  line-height: 1.7;
+}
+.intro p strong { color: var(--white); }
+
+/* === EPISODE INFO CARD === */
+.episode-card {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.episode-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--red-glow);
+  color: var(--red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.episode-card-info { flex: 1; min-width: 0; }
+.episode-card-label {
+  font-size: 10px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.episode-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.episode-card-date {
+  font-size: 12px;
+  color: var(--gray-400);
+  font-family: 'Inter', sans-serif;
+}
+
+/* === FORM === */
+form { display: flex; flex-direction: column; gap: 22px; }
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+.field-required {
+  color: var(--red);
+  margin-right: 3px;
+}
+.field-hint {
+  font-size: 12px;
+  color: var(--gray-400);
+  line-height: 1.5;
+}
+.field-counter {
+  font-size: 11px;
+  color: var(--gray-500);
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  background: var(--black-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--white);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+  border-color: var(--red);
+}
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--gray-500);
+}
+
+/* === TOPIC TAGS === */
+.topic-tags-wrap {
+  background: var(--black-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 100px;
+  align-items: flex-start;
+}
+.topic-tag {
+  background: var(--red-glow);
+  border: 1px solid rgba(211, 32, 32, 0.3);
+  color: var(--red-light);
+  padding: 7px 12px 7px 7px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.topic-tag-x {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(211, 32, 32, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+.topic-tag-input {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  outline: none;
+  flex: 1;
+  min-width: 100px;
+  padding: 5px;
+  font-family: inherit;
+}
+
+/* === RADIO TOGGLE === */
+.radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.radio-option {
+  background: var(--black-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.radio-option:has(input:checked) {
+  background: var(--red-glow);
+  border-color: var(--red);
+  color: var(--red-light);
+  font-weight: 700;
+}
+.radio-option input { display: none; }
+.radio-option-emoji {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+.radio-option-label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* === RATING === */
+.rating-wrap {
+  background: var(--black-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-around;
+  gap: 4px;
+}
+.rating-star {
+  width: 38px; height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.15s;
+  opacity: 0.3;
+}
+.rating-star:hover,
+.rating-star.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* === SUBMIT === */
+.submit-section {
+  position: fixed;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(to top, var(--black) 0%, var(--black) 60%, transparent 100%);
+  padding: 24px 20px 18px;
+  z-index: 20;
+}
+.submit-btn {
+  width: 100%;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 8px 24px rgba(211, 32, 32, 0.3);
+  transition: all 0.15s;
+}
+.submit-btn:active { transform: scale(0.98); }
+.submit-btn .submit-arrow { transition: transform 0.15s; }
+.submit-btn:hover .submit-arrow { transform: translateX(-4px); }
+.submit-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* === DESKTOP VIEW === */
+@media (min-width: 720px) {
+  body {
+    padding: 32px 0;
+    background: #050505;
+  }
+  .phone-frame {
+    background: var(--black);
+    border-radius: 32px;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+  .submit-section {
+    position: sticky;
+    bottom: 0;
+    transform: none;
+    right: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <span class="rec-dot"></span>
+      <span class="brand-name">הבונקר</span>
+    </div>
+    <div class="header-subtitle">Recording Wrap-Up</div>
+  </header>
+
+  <!-- Intro -->
+  <div class="intro">
+    <div class="intro-emoji">🎬</div>
+    <h1>סיימנו לצלם!<br>5 דקות שיעזרו לעורך</h1>
+    <p>תוך פחות מ-6 שעות תקבל לינק לצפייה ראשונה.<br>קצת מידע יעזור לנו לעשות את <strong>הקטעים הכי טובים</strong> שלך.</p>
+  </div>
+
+  <!-- Episode card -->
+  <div class="episode-card">
+    <div class="episode-card-icon">🎙</div>
+    <div class="episode-card-info">
+      <div class="episode-card-label">פרק 24</div>
+      <div class="episode-card-title">דניאל כהן · שיחה עם רוני סגל</div>
+      <div class="episode-card-date">15.05.2026 · 14:30-16:45</div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form onsubmit="event.preventDefault(); alert('הטופס נשלח!')">
+
+    <!-- Field 1: Episode title -->
+    <div class="field-group">
+      <label class="field-label">
+        כותרת הפרק <span class="field-required">*</span>
+      </label>
+      <div class="field-hint">איך הפרק יופיע ב-Spotify ו-YouTube?</div>
+      <input
+        type="text"
+        name="title"
+        required
+        maxlength="80"
+        placeholder="למשל: איך בונים סטארטאפ ב-2026"
+        value="איך בונים סטארטאפ ב-2026 — עם רוני סגל"
+      >
+      <div class="field-counter">45 / 80</div>
+    </div>
+
+    <!-- Field 2: Episode description -->
+    <div class="field-group">
+      <label class="field-label">
+        תיאור קצר <span class="field-required">*</span>
+      </label>
+      <div class="field-hint">2-3 משפטים — מה הפרק מבטיח? למה כדאי לצפות?</div>
+      <textarea
+        name="description"
+        required
+        maxlength="280"
+        placeholder="בפרק הזה אנחנו..."
+      >רוני סגל מספר על המכשולים שמעטים מדברים עליהם בגיוס מימון ראשון, ועל הטעות הכי נפוצה של מייסדים בשנה הראשונה.</textarea>
+      <div class="field-counter">156 / 280</div>
+    </div>
+
+    <!-- Field 3: Reel topics -->
+    <div class="field-group">
+      <label class="field-label">
+        רעיונות לרילסים <span class="field-required">*</span>
+      </label>
+      <div class="field-hint">5 נושאים שאתה רוצה לראות בקטעים קצרים לאינסטגרם. אם אתה לא בטוח — נחליט בשבילך.</div>
+      <div class="topic-tags-wrap">
+        <span class="topic-tag">למה גייסתי 5 מיליון <span class="topic-tag-x">×</span></span>
+        <span class="topic-tag">הטעות שעלתה לי 2 שנים <span class="topic-tag-x">×</span></span>
+        <span class="topic-tag">המאסטר plan שלא עבד <span class="topic-tag-x">×</span></span>
+        <span class="topic-tag">איך בוחרים co-founder <span class="topic-tag-x">×</span></span>
+        <input
+          type="text"
+          class="topic-tag-input"
+          placeholder="הוסף נושא ולחץ Enter..."
+        >
+      </div>
+    </div>
+
+    <!-- Field 4: Vibe -->
+    <div class="field-group">
+      <label class="field-label">
+        אווירת הפרק <span class="field-required">*</span>
+      </label>
+      <div class="field-hint">איזה טון תרצה שייצא במונטאז'?</div>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="vibe" value="energetic" checked>
+          <div class="radio-option-emoji">⚡</div>
+          <div class="radio-option-label">אנרגטי<br>וקצבי</div>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="vibe" value="conversational">
+          <div class="radio-option-emoji">☕</div>
+          <div class="radio-option-label">שיחתי<br>וזורם</div>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="vibe" value="dramatic">
+          <div class="radio-option-emoji">🎭</div>
+          <div class="radio-option-label">דרמטי<br>וריגושי</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Field 5: Special notes -->
+    <div class="field-group">
+      <label class="field-label">
+        הערות חשובות לעורך
+      </label>
+      <div class="field-hint">משהו ספציפי שצריך לחתוך? מקום שהזכרת בטעות שם של מישהו?</div>
+      <textarea
+        name="notes"
+        maxlength="500"
+        placeholder="לדוגמה: בדקה 23 הזכרתי שם של חבר בטעות, צריך לחתוך"
+      ></textarea>
+    </div>
+
+    <!-- Field 6: Target publish date -->
+    <div class="field-group">
+      <label class="field-label">
+        תאריך פרסום מבוקש (לא מחייב)
+      </label>
+      <div class="field-hint">מתי תרצה שהפרק יעלה לאוויר? אנחנו נשתדל לעמוד בזה.</div>
+      <input type="date" name="publish_date" value="2026-05-22">
+    </div>
+
+    <!-- Field 7: Recording quality rating -->
+    <div class="field-group">
+      <label class="field-label">
+        איך הייתה החוויה באולפן?
+      </label>
+      <div class="field-hint">פידבק כדי שנשתפר. ⭐ × 5 = הכל מושלם.</div>
+      <div class="rating-wrap">
+        <span class="rating-star active">⭐</span>
+        <span class="rating-star active">⭐</span>
+        <span class="rating-star active">⭐</span>
+        <span class="rating-star active">⭐</span>
+        <span class="rating-star active">⭐</span>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Submit -->
+  <div class="submit-section">
+    <button type="submit" class="submit-btn">
+      <span>שלח לבונקר</span>
+      <span class="submit-arrow">←</span>
+    </button>
+    <div class="submit-hint">תוך 6 שעות תקבל לינק לצפייה</div>
+  </div>
+
+</div>
+
+</body>
+</html>
